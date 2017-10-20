@@ -70,7 +70,7 @@ namespace XUIF
 		public void PushEnd (string key,T val)
 		{
 			Node<T> node = new Node<T> (key, val, end);
-			End = node;
+			end = node;
 		}
 
 		/// <summary>
@@ -90,7 +90,7 @@ namespace XUIF
 				}
 				return tArr;
 			}
-			return new T[end.Data];
+			return new T[1]{ end.Data };
 		}
 
 		/// <summary>
@@ -212,7 +212,7 @@ namespace XUIF
 					}
 				}
 			}
-			return null;
+			return default(T);
 		}
 
 		/// <summary>
@@ -222,11 +222,16 @@ namespace XUIF
 		/// <returns></returns>
 		public T RemoveChild (string leaf)
 		{
-			T t = GetChild (leaf);
-			if (t != null) {
-				children.Remove (t);
+			if (children != null && children.Count != 0) {
+				for (int i = 0; i < children.Count; i++) {
+					if (children [i].Id == leaf) {
+						T t = children [i].Data;
+						children.RemoveAt (i);
+						return t;
+					}
+				}
 			}
-			return t;
+			return default(T);
 		}
 
 		/// <summary>
