@@ -19,170 +19,230 @@ using System.Collections.Generic;
 
 namespace XUIF
 {
-    public class UITree<T>
-    {
-        private Stack<Node<T>> treeTrunk;
-        
-        private Node<T> root;                           //头引用
+	public class UITree<T>
+	{
+		//根引用
+		private Node<T> root;
 
-        //头引用属性
-        public Node<T> Root
-        {
-            get { return root; }
-            set { root = value; }
-        }
+		//根引用属性
+		public Node<T> Root {
+			get { return root; }
+		}
 
-        #region 构造器
+		//叶引用
+		private Node<T> end;
 
-        public UITree()
-        {
-            root = null;
-            treeTrunk = new Stack<Node<T>>();
-        }
-        
-        public UITree(T val)
-        {
-            Node<T> p = new Node<T>(val);
-            root = p;
-            treeTrunk = new Stack<Node<T>>();
-        }
+		//叶引用属性
+		public Node<T> End {
+			get{ return end; }
+		}
 
-        public UITree(Node<T> parent)
-        {
-            Node<T> p = new Node<T>(parent);
-            root = p;
-            treeTrunk = new Stack<Node<T>>();
-        }
+		#region 构造器
 
-        public UITree(T val,Node<T> parent)
-        {
-            Node<T> p = new Node<T>(val, parent);
-            root = p;
-            treeTrunk = new Stack<Node<T>>();
-        }
+		/// <summary>
+		/// 创建新节点，并作为新树根节点及叶节点
+		/// </summary>
+		/// <param name="val">Value.</param>
+		public UITree (string key, T val)
+		{
+			Node<T> p = new Node<T> (key, val);
+			root = p;
+			end = p;
+		}
 
-        #endregion 
+		#endregion
 
-        /// <summary>
-        /// 判断是否空树
-        /// </summary>
-        /// <returns></returns>
-        public bool IsEmpty()
-        {
-            return root == null;
-        }
-        
+		/// <summary>
+		/// 判断是否空树
+		/// </summary>
+		/// <returns></returns>
+		public bool IsEmpty ()
+		{
+			return root == null;
+		}
 
-        /// <summary>
-        /// 获取叶子节点
-        /// </summary>
-        /// <param name="nodeName">子节点名</param>
-        /// <returns></returns>
-        public Node<T> GetChild(string nodeName)
-        {
-            return null;
-        }
+		#region 树结构逻辑
 
-        /// <summary>
-        /// 新节点入栈
-        /// </summary>
-        /// <param name="node"></param>
-        public void PushLeaf(Node<T> node)
-        {
-            treeTrunk.Push(node);
-        }
+		/// <summary>
+		/// Pushs the end.
+		/// </summary>
+		/// <param name="val">Value.</param>/
+		public void PushEnd (string key,T val)
+		{
+			Node<T> node = new Node<T> (key, val, end);
+			End = node;
+		}
 
-        /// <summary>
-        /// 叶子节点出栈
-        /// </summary>
-        /// <returns></returns>
-        public Node<T> PopLeaf()
-        {
-            return treeTrunk.PopItem();
-        }
+		/// <summary>
+		/// Pops the end.
+		/// </summary>
+		/// <returns>The end.</returns>//
+		public T[] PopEnd ()
+		{
+			if (end.HaveChildren ()) {
+				List<Node<T>> list = end.ClearChildren ();
+				list.Add (end);
+				end = end.Parent;
 
-        /// <summary>
-        /// 获取叶子节点，不出栈
-        /// </summary>
-        /// <returns></returns>
-        public Node<T> PeekLeaf()
-        {
-            return treeTrunk.PeekItem();
-        }
+				T[] tArr = new T[list.Count];
+				for (int i = 0; i < list.Count; i++) {
+					tArr [i] = list [i].Data;
+				}
+				return tArr;
+			}
+			return new T[end.Data];
+		}
 
-    }
+		/// <summary>
+		/// Peeks the end.
+		/// </summary>
+		/// <returns>The end.</returns>/
+		public T PeekEnd ()
+		{
+			return end.Data;
+		}
 
-    public class Node<T>
-    {
-        private T data;                                   //数据域
-        private Node<T> parent;                           //父节点
-        private Dictionary<string, Node<T>> children;     //孩子集
+		/// <summary>
+		/// Adds the leaf.
+		/// </summary>
+		/// <param name="key">Key.</param>
+		/// <param name="leaf">Leaf.</param>
+		public void AddLeaf (string key, T leaf)
+		{
+			end.AddChild (key, leaf);
+		}
 
-        #region 构造器
+		/// <summary>
+		/// Removes the leaf.
+		/// </summary>
+		/// <returns>The leaf.</returns>
+		/// <param name="leaf">Leaf.</param>
+		public T RemoveLeaf(string leaf){
+		 	return end.RemoveChild (leaf);
+		}
 
-        public Node(T val, Node<T> p)
-        {
-            data = val;
-            parent = p;
-            children = new Dictionary<string, Node<T>>();
-        }
 
-        public Node(T val)
-        {
-            data = val;
-            parent = null;
-            children = new Dictionary<string, Node<T>>();
-        }
+		#endregion
 
-        public Node(Node<T> p)
-        {
-            data = default(T);
-            parent = p;
-            children = new Dictionary<string, Node<T>>();
-        }
+	}
 
-        #endregion
+	public class Node<T>
+	{
+		//节点ID
+		private string id;
+		//数据域
+		private T data;
+		//父节点
+		private Node<T> parent;
+		//孩子集
+//		private Dictionary<string, Node<T>> children;
+		private List<Node<T>> children;
 
-        //数据属性
-        public T Data
-        {
-            get { return data; }
-            set { data = value; }
-        }
 
-        //父节点属性
-        public Node<T> Parent
-        {
-            get { return parent; }
-            set { parent = value; }
-        }
+		#region 构造器
 
-        /// <summary>
-        /// 查找子节点
-        /// </summary>
-        /// <param name="node">子节点名</param>
-        /// <returns></returns>
-        public Node<T> GetChild(string node)
-        {
-            return children.GetValue(node);
-        }
+		public Node (string key, T val, Node<T> p)
+		{
+			id = key;
+			data = val;
+			parent = p;
+		}
 
-        /// <summary>
-        /// 删除子节点
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
-        public bool RemoveChild(string node)
-        {
-            return children.Remove(node);
-        }
+		public Node (string key, T val)
+		{
+			id = key;
+			data = val;
+			parent = null;
+		}
 
-        /// <summary>
-        /// 清空子节点
-        /// </summary>
-        public void ClearChildren()
-        {
-            children.Clear();
-        }
-    }
+		public Node (Node<T> p)
+		{
+			data = default(T);
+			parent = p;
+		}
+
+		#endregion
+
+		#region 属性
+
+		//数据ID
+		public string Id {
+			get{ return id; }
+		}
+
+		//数据属性
+		public T Data {
+			get { return data; }
+			set { data = value; }
+		}
+
+		//父节点属性
+		public Node<T> Parent {
+			get { return parent; }
+			set { parent = value; }
+		}
+
+		#endregion
+
+		/// <summary>
+		/// Adds the child.
+		/// </summary>
+		/// <param name="id">Identifier.</param>
+		/// <param name="val">Value.</param>
+		public void AddChild (string id, T val)
+		{
+			if (children == null) {
+				children = new List<Node<T>> ();
+			}
+			Node<T> node = new Node<T> (id, val, this);
+			children.Add (node);
+		}
+
+		/// <summary>
+		/// 查找叶节点
+		/// </summary>
+		/// <param name="node">叶节点名</param>
+		/// <returns></returns>
+		public T GetChild (string leaf)
+		{
+			if (children != null && children.Count != 0) {
+				for (int i = 0; i < children.Count; i++) {
+					if (children [i].Id == leaf) {
+						return children [i].Data;
+					}
+				}
+			}
+			return null;
+		}
+
+		/// <summary>
+		/// 删除叶节点
+		/// </summary>
+		/// <param name="node">叶节点名</param>
+		/// <returns></returns>
+		public T RemoveChild (string leaf)
+		{
+			T t = GetChild (leaf);
+			if (t != null) {
+				children.Remove (t);
+			}
+			return t;
+		}
+
+		/// <summary>
+		/// 清空子节点
+		/// </summary>
+		public List<Node<T>> ClearChildren ()
+		{
+			List<Node<T>> list = children;
+			if (children != null) {
+				children.Clear ();
+			}
+			return list;
+		}
+
+		public bool HaveChildren(){
+			return children != null || children.Count != 0;
+		}
+	}
 }

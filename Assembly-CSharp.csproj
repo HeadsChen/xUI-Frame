@@ -52,6 +52,7 @@
      <Compile Include="Assets\XUIFrame\EventDelegate\EventTriggerListener.cs" />
      <Compile Include="Assets\XUIFrame\EventDelegate\MessageCenter.cs" />
      <Compile Include="Assets\XUIFrame\Extension\ExtensionDictionary.cs" />
+     <Compile Include="Assets\XUIFrame\Extension\UITree.cs" />
      <Compile Include="Assets\XUIFrame\Mediator\Mediator.cs" />
      <Compile Include="Assets\XUIFrame\Mediator\TestMediator.cs" />
      <Compile Include="Assets\XUIFrame\Panel\Panel.cs" />
