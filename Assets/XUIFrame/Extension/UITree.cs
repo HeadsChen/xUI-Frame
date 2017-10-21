@@ -43,9 +43,9 @@ namespace XUIF
 		/// 创建新节点，并作为新树根节点及叶节点
 		/// </summary>
 		/// <param name="val">Value.</param>
-		public UITree (string key, T val)
+		public UITree (string id, T val)
 		{
-			Node<T> p = new Node<T> (key, val);
+			Node<T> p = new Node<T> (id, val);
 			root = p;
 			end = p;
 		}
@@ -67,16 +67,16 @@ namespace XUIF
 		/// Pushs the end.
 		/// </summary>
 		/// <param name="val">Value.</param>/
-		public void PushEnd (string key,T val)
+		public void PushEnd (string id,T val)
 		{
-			Node<T> node = new Node<T> (key, val, end);
+			Node<T> node = new Node<T> (id, val, end);
 			end = node;
 		}
 
 
-        public void PushEnd(string key,T val,Node<T> leafNode)
+        public void PushEnd(string id,T val,Node<T> leafNode)
         {
-            Node<T> node = new Node<T>(key, val, leafNode);
+			Node<T> node = new Node<T>(id, val, leafNode);
             end = node;
         }
 
@@ -87,21 +87,16 @@ namespace XUIF
 		public T[] PopEnd ()
 		{
 			if (end.HaveChildren ()) {
-				List<Node<T>> list = end.ClearChildren ();
-				list.Add (end);
+				T[] tArr = GetNodeArr ();
+				end.ClearChildren ();
 				end = end.Parent;
-
-				T[] tArr = new T[list.Count];
-				for (int i = 0; i < list.Count; i++) {
-					tArr [i] = list [i].Data;
-				}
 				return tArr;
 			}
 
-            T t = end.Data;
-            end = end.Parent;
+			T t = end.Data;
+			end = end.Parent;
 
-            return new T[1] { t };
+			return new T[1] { t };
 		}
 
 		/// <summary>
@@ -112,15 +107,7 @@ namespace XUIF
 		{
             if (end.HaveChildren())
             {
-                List<Node<T>> list = end.Children;
-                list.Add(end);
-
-                T[] tArr = new T[list.Count];
-                for (int i = 0; i < list.Count; i++)
-                {
-                    tArr[i] = list[i].Data;
-                }
-                return tArr;
+				return GetNodeArr ();
             }
             return new T[1] { end.Data };
 		}
@@ -138,11 +125,13 @@ namespace XUIF
 		/// <summary>
 		/// Adds the leaf.
 		/// </summary>
-		/// <param name="key">Key.</param>
+		/// <param name="id">Id.</param>
 		/// <param name="leaf">Leaf.</param>
-		public void AddLeaf (string key, T leaf)
+		public void AddLeaf (string id, T leaf)
 		{
-			end.AddChild (key, leaf);
+			if (end.ContainsChild (id))
+				return;
+			end.AddChild (id, leaf);
 		}
 
 		/// <summary>
@@ -150,20 +139,33 @@ namespace XUIF
 		/// </summary>
 		/// <returns>The leaf.</returns>
 		/// <param name="leaf">Leaf.</param>
-		public T RemoveLeaf(string leaf){
-		 	return end.RemoveChild (leaf);
+		public T RemoveLeaf(string id){
+			return end.RemoveChild (id);
 		}
         
 		#endregion
 
+		#if UNITY_EDITOR
+
+		#region 测试用！测试用！测试用！
+		private T[] GetNodeArr(){
+			int count = end.Children.Count;
+			T[] tArr = new T[count + 1];
+			for (int i = 0; i < count; i++) {
+				tArr [i] = end.Children [i].Data;
+			}
+			tArr [count] = end.Data;
+			return tArr;
+		}
+
         /// <summary>
-        /// 遍历树结构，测试用！测试用！测试用！
+        /// 遍历树结构
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
         public string Traverse(Node<T> node)
         {
-            string idStr = node.Id;
+			string idStr = node.Id + GetChildrenId (node);
             if (node.Parent != null)
             {
                 idStr = idStr + "-" + Traverse(node.Parent);
@@ -172,11 +174,25 @@ namespace XUIF
             return idStr;
         }
 
-        private string GetId(Node<T> node)
-        {
-            return node.Id;
-        }
+		private string GetChildrenId(Node<T> node){
+			if (node.HaveChildren ()) {
+				string str = "(";
+				for (int i = 0; i < node.Children.Count; i++) {
+					str = str + node.Children [i].Id + "-";
+				}
+				int lastIndex = -1;
+				lastIndex = str.LastIndexOf ('-');
+				if (lastIndex != -1) {
+					str.Remove (lastIndex);
+				}
+				str += ")";
+				return str;
+			}
+			return "";
+		}
+		#endregion
 
+		#endif
 	}
 
 	public class Node<T>
@@ -194,16 +210,16 @@ namespace XUIF
 
 		#region 构造器
 
-		public Node (string key, T val, Node<T> p)
+		public Node (string id, T val, Node<T> p)
 		{
-			id = key;
+			this.id = id;
 			data = val;
 			parent = p;
 		}
 
-		public Node (string key, T val)
+		public Node (string id, T val)
 		{
-			id = key;
+			this.id = id;
 			data = val;
 			parent = null;
 		}
@@ -264,16 +280,29 @@ namespace XUIF
 		/// </summary>
 		/// <param name="node">叶节点名</param>
 		/// <returns></returns>
-		public T GetChild (string leaf)
+		public bool TryGetChild (string id,out T child)
 		{
-			if (children != null && children.Count != 0) {
+			if (HaveChildren()) {
 				for (int i = 0; i < children.Count; i++) {
-					if (children [i].Id == leaf) {
-						return children [i].Data;
+					if (children [i].Id == id) {
+						child = children [i].Data;
+						return true;
 					}
 				}
 			}
-			return default(T);
+			child = default(T);
+			return false;
+		}
+
+		public bool ContainsChild(string id){
+			if (HaveChildren ()) {
+				for (int i = 0; i < children.Count; i++) {
+					if (children [i].Id == id) {
+						return true;
+					}
+				}
+			}
+			return false;
 		}
 
 		/// <summary>
@@ -281,11 +310,11 @@ namespace XUIF
 		/// </summary>
 		/// <param name="node">叶节点名</param>
 		/// <returns></returns>
-		public T RemoveChild (string leaf)
+		public T RemoveChild (string id)
 		{
 			if (children != null && children.Count != 0) {
 				for (int i = 0; i < children.Count; i++) {
-					if (children [i].Id == leaf) {
+					if (children [i].Id == id) {
 						T t = children [i].Data;
 						children.RemoveAt (i);
 						return t;
@@ -298,13 +327,11 @@ namespace XUIF
 		/// <summary>
 		/// 清空子节点
 		/// </summary>
-		public List<Node<T>> ClearChildren ()
+		public void ClearChildren ()
 		{
-			List<Node<T>> list = children;
 			if (children != null) {
 				children.Clear ();
 			}
-			return list;
 		}
 
 		public bool HaveChildren(){

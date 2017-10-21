@@ -87,10 +87,7 @@ namespace XUIF
                 _UITree.PushEnd(panel, m);
             }
 
-            Debug.LogFormat("Current UI Tree contains : {0}", _UITree.Traverse(_UITree.End));
-
-
-            Debug.LogFormat("Current panel is {0}", _UITree.End.Id);
+			Log ();
 
             return m != null;
         }
@@ -110,6 +107,8 @@ namespace XUIF
             {
                 reactArr[i].Reactivate();
             }
+
+			Log ();
 		}        
 
         public bool OpenSubPanel(string panel)
@@ -120,6 +119,9 @@ namespace XUIF
                 m.Display();
                 _UITree.AddLeaf(panel, m);
             }
+
+			Log ();
+
             return m != null;
         }
 
@@ -131,6 +133,8 @@ namespace XUIF
         {
             Mediator m = _UITree.RemoveLeaf(panel);
             m.Hide();
+
+			Log ();
         }
 
         #endregion
@@ -205,6 +209,15 @@ namespace XUIF
             return _mediatorDic.GetValue(panel);
 		}
 
+		#region 测试用
+		private void Log(){
+			Debug.LogFormat ("Current UI Tree contains : {0}", _UITree.Traverse (_UITree.End));
+
+			Debug.LogFormat ("Current panel is {0}", _UITree.End.Id);
+		}
+		#endregion
+
+
 		#region 加载资源行为
 
 		/// <summary>
@@ -254,17 +267,23 @@ namespace XUIF
 		}
 
         private void LoadConfig()
-        {
-            _prefDic = new Dictionary<string, string> {
-                { "Main","UIPanel/MainPanel" },
-                {
-                    "Root","UIPanel/RootPanel"
-                },
-                {
-                    "Login","UIPanel/LoginPanel"
-                }
-            };
-        }
+		{
+			_prefDic = new Dictionary<string, string> { 
+				{
+					"Main","UIPanel/MainPanel"
+				}, {
+					"Root","UIPanel/RootPanel"
+				}, {
+					"Login","UIPanel/LoginPanel"
+				}, {
+					"HeroInfo","UIPanel/HeroInfoPanel"
+				}, {
+					"PetInfo","UIPanel/PetInfoPanel"
+				}, {
+					"DetailInfo","UIPanel/DetailInfoPanel"
+				},
+			};
+		}
 
 		#endregion
 	}

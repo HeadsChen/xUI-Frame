@@ -18,16 +18,13 @@ using System.Collections;
 using XUIF;
 using System;
 
-public class TestMediator : Mediator {
+public class MainMediator : Mediator {
 
     public override void OnRegister()
     {
-        BindClickEvent("btn", go =>
-        {
-            Debug.Log(go.name + "button click");
-            MessageCenter.SendMessage("img", Color.red);
-            MessageCenter.SendMessage("text", "Hello xUI");
-        });
+		BindClickEvent ("hero_info", go => {
+			OpenPanel ("HeroInfo");
+		});
 
         
     }

@@ -21,13 +21,16 @@ namespace XUIF
     class ContextBinder 
     {
         static Dictionary<string, System.Type> _dic = new Dictionary<string, System.Type> {
-            //添加（面板名：中转器类型）键值对，如：
-            { "Main",typeof(TestMediator) },
-            {"Root",typeof(RootMediator) },
-            {"Login",typeof(LoginMediator) }
+			//添加（面板名：中转器类型）键值对，如：
+			{ "Main",typeof(MainMediator) },
+			{ "Root",typeof(RootMediator) },
+			{ "Login",typeof(LoginMediator) },
+			{ "HeroInfo",typeof(HeroInfoMediator) },
+			{ "PetInfo",typeof(PetInfoMediator) },
+			{ "DetailInfo",typeof(DetailInfoMediator) },
 
 
-        };
+		};
 
 
 
