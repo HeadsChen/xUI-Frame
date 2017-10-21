@@ -26,9 +26,7 @@ namespace XUIF
         //消息委托集
         //<string:消息键，MessageDelegate:更新数据委托>
         static Dictionary<string, MessageDelegate> _messagesDic = new Dictionary<string, MessageDelegate>();
-
-
-
+        
         /// <summary>
         /// 添加消息监听
         /// </summary>
@@ -43,19 +41,6 @@ namespace XUIF
             _messagesDic[msgType] += delHandle;
         }
         
-        /// <summary>
-        /// 移除指定消息委托
-        /// </summary>
-        /// <param name="msgType">消息类型</param>
-        /// <param name="delHandle">消息委托</param>
-        //public static void RemoveMsgListener(string msgType,MessageDelegate delHandle)
-        //{
-        //    if (_messagesDic.ContainsKey(msgType))
-        //    {
-        //        _messagesDic[msgType] -= delHandle;
-        //    }
-        //}
-
         /// <summary>
         /// 移除指定消息监听
         /// </summary>
@@ -94,5 +79,6 @@ namespace XUIF
         }
 
     }
+    
 }
 

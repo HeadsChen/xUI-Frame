@@ -49,16 +49,16 @@ namespace XUIF
 			root = p;
 			end = p;
 		}
-
+        
 		#endregion
 
 		/// <summary>
-		/// 判断是否空树
+		/// 判断是否只有根节点
 		/// </summary>
 		/// <returns></returns>
-		public bool IsEmpty ()
+		public bool NotOnlyRoot ()
 		{
-			return root == null;
+            return root.Id != end.Id;
 		}
 
 		#region 树结构逻辑
@@ -72,6 +72,13 @@ namespace XUIF
 			Node<T> node = new Node<T> (key, val, end);
 			end = node;
 		}
+
+
+        public void PushEnd(string key,T val,Node<T> leafNode)
+        {
+            Node<T> node = new Node<T>(key, val, leafNode);
+            end = node;
+        }
 
 		/// <summary>
 		/// Pops the end.
@@ -90,17 +97,43 @@ namespace XUIF
 				}
 				return tArr;
 			}
-			return new T[1]{ end.Data };
+
+            T t = end.Data;
+            end = end.Parent;
+
+            return new T[1] { t };
 		}
 
 		/// <summary>
 		/// Peeks the end.
 		/// </summary>
 		/// <returns>The end.</returns>/
-		public T PeekEnd ()
+		public T[] PeekEnd ()
 		{
-			return end.Data;
+            if (end.HaveChildren())
+            {
+                List<Node<T>> list = end.Children;
+                list.Add(end);
+
+                T[] tArr = new T[list.Count];
+                for (int i = 0; i < list.Count; i++)
+                {
+                    tArr[i] = list[i].Data;
+                }
+                return tArr;
+            }
+            return new T[1] { end.Data };
 		}
+
+        /// <summary>
+        /// 移除前末梢
+        /// </summary>
+        public void RemoveExEnd()
+        {
+            Node<T> parent = end.Parent.Parent;
+            end.Parent.Parent = null;
+            end.Parent = parent;
+        }
 
 		/// <summary>
 		/// Adds the leaf.
@@ -120,9 +153,29 @@ namespace XUIF
 		public T RemoveLeaf(string leaf){
 		 	return end.RemoveChild (leaf);
 		}
-
-
+        
 		#endregion
+
+        /// <summary>
+        /// 遍历树结构，测试用！测试用！测试用！
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public string Traverse(Node<T> node)
+        {
+            string idStr = node.Id;
+            if (node.Parent != null)
+            {
+                idStr = idStr + "-" + Traverse(node.Parent);
+            }
+            
+            return idStr;
+        }
+
+        private string GetId(Node<T> node)
+        {
+            return node.Id;
+        }
 
 	}
 
@@ -166,21 +219,29 @@ namespace XUIF
 		#region 属性
 
 		//数据ID
-		public string Id {
-			get{ return id; }
-		}
+		public string Id
+        {
+            get { return id; }
+        }
 
 		//数据属性
-		public T Data {
-			get { return data; }
-			set { data = value; }
-		}
+		public T Data
+        {
+            get { return data; }
+        }
 
 		//父节点属性
-		public Node<T> Parent {
-			get { return parent; }
-			set { parent = value; }
-		}
+		public Node<T> Parent
+        {
+            get { return parent; }
+            set { parent = value; }
+        }
+
+
+        public List<Node<T>> Children
+        {
+            get { return children; }
+        }
 
 		#endregion
 
@@ -247,7 +308,7 @@ namespace XUIF
 		}
 
 		public bool HaveChildren(){
-			return children != null || children.Count != 0;
+			return children != null && children.Count != 0;
 		}
 	}
 }

@@ -21,7 +21,7 @@ public static class ExtensionDictionary {
 	/// this Dictionary<Tkey,Tvalue> dict 表示要获取值的字典
 	/// </summary>
 	public static Tvalue GetValue<Tkey, Tvalue>(this Dictionary<Tkey, Tvalue> dict, Tkey key)
-    {
+    {        
         Tvalue value;
         dict.TryGetValue(key, out value);
         return value;

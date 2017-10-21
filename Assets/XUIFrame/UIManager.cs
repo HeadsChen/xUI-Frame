@@ -38,14 +38,12 @@ namespace XUIF
 		//}
 		//#endregion
 
-		public Transform _UIRoot;
+		public Transform _Canvas;
 
 		Dictionary<string, string> _prefDic;
 		Dictionary<string, Mediator> _mediatorDic;
 
-		Stack<Mediator> _currentViewStack;
-
-
+        UITree<Mediator> _UITree;
 
 		private void Start ()
 		{
@@ -58,67 +56,153 @@ namespace XUIF
 			//m.OnRegister();
 			_mediatorDic = new Dictionary<string, Mediator> ();
 			LoadConfig ();
+            CreateTree();
+
+            OpenPanel("Login");
 		}
 
-		/// <summary>
-		/// Opens the new panel.
-		/// </summary>
-		/// <returns><c>true</c>, if new panel was opened, <c>false</c> otherwise.</returns>
-		/// <param name="panel">Panel Name</param>
-		public bool OpenNewPanel(string panel){
-			Mediator m = GetMediator (panel);
-			if (m != null) {
-				m.Display ();
-				PushPanel2Cache (m);
-			}
-			return m != null;
-		}
+        #region 对外接口。打开、关闭面板方式各两种
 
+        /// <summary>
+        /// 打开新面板，根据是否为子面板添加为叶节点或末梢节点。
+        /// 添加为末梢时，冻结前末梢面板。
+        /// </summary>
+        /// <param name="panel"></param>
+        /// <returns></returns>
+        public bool OpenPanel(string panel)
+        {
+            Mediator m = GetMediator(panel);
+            if (m != null)
+            {
+                if (_UITree.NotOnlyRoot())
+                {
+                    Mediator[] freezeArr = _UITree.PeekEnd();
+                    for (int i = 0; i < freezeArr.Length; i++)
+                    {
+                        freezeArr[i].Freeze();
+                    }
+                }
+
+                m.Display();
+                _UITree.PushEnd(panel, m);
+            }
+
+            Debug.LogFormat("Current UI Tree contains : {0}", _UITree.Traverse(_UITree.End));
+
+
+            Debug.LogFormat("Current panel is {0}", _UITree.End.Id);
+
+            return m != null;
+        }
+
+        /// <summary>
+        /// 关闭末梢面板，重激活前末梢面板
+        /// </summary>
 		public void ClosePanel(){
-			
-		}
+            Mediator[] hideArr = _UITree.PopEnd();
+            for (int i = 0; i < hideArr.Length; i++)
+            {
+                hideArr[i].Hide();
+            }
 
-		#region 面板调度器入栈出栈
+            Mediator[] reactArr = _UITree.PeekEnd();
+            for (int i = 0; i < reactArr.Length; i++)
+            {
+                reactArr[i].Reactivate();
+            }
+		}        
 
-		/// <summary>
-		/// Pushs the panel to cache.
-		/// </summary>
-		/// <param name="m">入栈面板的调度器</param>
-		private void PushPanel2Cache (Mediator m)
+        public bool OpenSubPanel(string panel)
+        {
+            Mediator m = GetMediator(panel);
+            if (m != null)
+            {
+                m.Display();
+                _UITree.AddLeaf(panel, m);
+            }
+            return m != null;
+        }
+
+        /// <summary>
+        /// 关闭子面板
+        /// </summary>
+        /// <param name="panel"></param>
+        public void CloseSubPanel(string panel)
+        {
+            Mediator m = _UITree.RemoveLeaf(panel);
+            m.Hide();
+        }
+
+        #endregion
+
+        #region UI树行为逻辑
+          
+        /// <summary>
+        /// 创建UI树
+        /// </summary>
+        private void CreateTree()
+        {
+            Mediator m = GetMediator("Root");
+            _UITree = new UITree<Mediator>("Root", m);
+            if (m != null)
+            {
+                Debug.Log("UI Tree created.");
+            }
+        }
+
+        //      /// <summary>
+        //      /// 添加新面板到UI树末梢
+        //      /// </summary>
+        //      /// <param name="panel">面板名</param>
+        //      /// <param name="m">面板调度器</param>
+        //      private void PushPanel2End (string panel, Mediator m)
+        //{
+        //          _UITree.PushEnd(panel, m);
+        //}
+
+        //      /// <summary>
+        //      /// Pops the panel from UITree end.
+        //      /// </summary>
+        //      /// <returns>The panel from cache.</returns>
+        //      private Mediator[] PopPanelFromEnd ()
+        //{
+        //          return _UITree.PopEnd();
+        //}
+
+        ///// <summary>
+        ///// Peeks the panel from UITree end.
+        ///// </summary>
+        ///// <returns>The panel from cache.</returns>
+        //private Mediator[] PeekPanelFromEnd()
+        //{
+        //    return _UITree.PeekEnd();
+        //}
+
+
+        //      private void AddLeaf2End(string panel, Mediator m)
+        //      {
+        //          _UITree.AddLeaf(panel, m);
+        //      }
+
+        //      private Mediator RemoveLeafFromEnd(string panel)
+        //      {
+        //          return _UITree.RemoveLeaf(panel);
+        //      }
+
+        #endregion
+
+        /// <summary>
+        /// Gets the mediator.
+        /// </summary>
+        /// <returns>The mediator.</returns>
+        /// <param name="panel">面板名</param>
+        private Mediator GetMediator (string panel)
 		{
-			if (_currentViewStack != null) {
-				_currentViewStack.Push (m);
-			}
-		}
-
-		/// <summary>
-		/// Pops the panel from cache.
-		/// </summary>
-		/// <returns>The panel from cache.</returns>
-		private Mediator PopPanelFromCache ()
-		{
-			return _currentViewStack.IsNotNullOrEmpty () ? _currentViewStack.Pop () : null;
-		}
-
-		/// <summary>
-		/// Peeks the panel from cache.
-		/// </summary>
-		/// <returns>The panel from cache.</returns>
-		private Mediator PeekPanelFromCache ()
-		{
-			return _currentViewStack.IsNotNullOrEmpty () ? _currentViewStack.Peek () : null;
-		}
-
-		#endregion
-
-		/// <summary>
-		/// Gets the mediator.
-		/// </summary>
-		/// <returns>The mediator.</returns>
-		/// <param name="panel">面板名</param>
-		public Mediator GetMediator (string panel)
-		{
-			return _mediatorDic.GetValue (panel);
+            if (!_mediatorDic.ContainsKey(panel))
+            {
+                LoadPanel(panel);
+            }
+            return _mediatorDic.GetValue(panel);
 		}
 
 		#region 加载资源行为
@@ -131,16 +215,27 @@ namespace XUIF
 		{
 			GameObject go = LoadPanelPref (panel);
 			if (go != null) {
-				GameObject panelGo = Instantiate<GameObject> (go);
-				panelGo.transform.SetParent (_UIRoot);
+                GameObject panelGo = Instantiate(go);
+                panelGo.transform.SetParent(_Canvas, false);
 
-				panelGo.GetComponent<Panel> ().InitPanel ();
+                panelGo.GetComponent<Panel> ().InitPanel ();
 
-				System.Type m_type = ContextBinder.GetMediator (panel);
-				Mediator m = panelGo.AddComponent (m_type) as Mediator;
-				m.OnRegister ();
-				_mediatorDic.Add (panel, m);
+                try
+                {
+                    System.Type m_type = ContextBinder.GetMediator(panel);
+                    Mediator m = panelGo.AddComponent(m_type) as Mediator;
+                    m.OnRegister();
+                    _mediatorDic.Add(panel, m);
+                }
+                catch
+                {
+                    Debug.LogErrorFormat("Mediator not set to {0}Panel", panel);
+                }
+				
+                return;
 			}
+            Debug.LogWarningFormat("The Panel {0} prefab is nonexistent.Please check the path:{1}",
+                panel, _prefDic[panel]);
 		}
 
 		/// <summary>
@@ -158,12 +253,18 @@ namespace XUIF
 			return Resources.Load<GameObject> (panelPath);
 		}
 
-		private void LoadConfig ()
-		{
-			_prefDic = new Dictionary<string, string> {
-				{ "Test","UIPanel/TestPanel" }
-			};
-		}
+        private void LoadConfig()
+        {
+            _prefDic = new Dictionary<string, string> {
+                { "Main","UIPanel/MainPanel" },
+                {
+                    "Root","UIPanel/RootPanel"
+                },
+                {
+                    "Login","UIPanel/LoginPanel"
+                }
+            };
+        }
 
 		#endregion
 	}

@@ -77,11 +77,16 @@
     <Compile Include="Assets\XUIFrame\EventDelegate\MessageCenter.cs" />
     <Compile Include="Assets\XUIFrame\Extension\ExtensionDictionary.cs" />
     <Compile Include="Assets\XUIFrame\Extension\UITree.cs" />
+    <Compile Include="Assets\XUIFrame\Mediator\LoginMediator.cs" />
     <Compile Include="Assets\XUIFrame\Mediator\Mediator.cs" />
+    <Compile Include="Assets\XUIFrame\Mediator\RootMediator.cs" />
     <Compile Include="Assets\XUIFrame\Mediator\TestMediator.cs" />
+    <Compile Include="Assets\XUIFrame\Panel\LoginPanel.cs" />
     <Compile Include="Assets\XUIFrame\Panel\Panel.cs" />
+    <Compile Include="Assets\XUIFrame\Panel\RootPanel.cs" />
     <Compile Include="Assets\XUIFrame\Panel\TestPanel.cs" />
     <Compile Include="Assets\XUIFrame\UIManager.cs" />
+    <Compile Include="Assets\XUIFrame\Utility\TempDataCache.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

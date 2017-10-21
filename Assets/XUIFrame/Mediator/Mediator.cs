@@ -14,7 +14,6 @@
  */
 
 using UnityEngine;
-using System.Collections;
 
 namespace XUIF
 {
@@ -71,7 +70,7 @@ namespace XUIF
         /// <param name="panel">新面板名</param>
         protected void OpenPanel(string panel)
         {
-
+            UIManager.Instance.OpenPanel(panel);
         }
 
         /// <summary>

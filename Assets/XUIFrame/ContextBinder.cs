@@ -22,9 +22,9 @@ namespace XUIF
     {
         static Dictionary<string, System.Type> _dic = new Dictionary<string, System.Type> {
             //添加（面板名：中转器类型）键值对，如：
-            { "TestPanel",typeof(TestMediator) }
-
-
+            { "Main",typeof(TestMediator) },
+            {"Root",typeof(RootMediator) },
+            {"Login",typeof(LoginMediator) }
 
 
         };
