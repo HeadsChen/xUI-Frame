@@ -28,9 +28,11 @@ namespace XUIF
 			{ "HeroInfo",typeof(HeroInfoMediator) },
 			{ "PetInfo",typeof(PetInfoMediator) },
 			{ "DetailInfo",typeof(DetailInfoMediator) },
-
-
-		};
+            {"Email",typeof(EmailMediator) },
+            {"Notice",typeof(NoticeMediator) },
+            {"Letter",typeof(LetterMediator) },
+            {"Award",typeof(AwardMediator) },
+        };
 
 
 

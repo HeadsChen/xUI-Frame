@@ -82,9 +82,8 @@ namespace XUIF
                         freezeArr[i].Freeze();
                     }
                 }
-
-                m.Display();
                 _UITree.PushEnd(panel, m);
+                m.Display();
             }
 
 			Log ();
@@ -111,13 +110,18 @@ namespace XUIF
 			Log ();
 		}        
 
-        public bool OpenSubPanel(string panel)
+        public bool OpenSubPanel(string panel,Transform parent=null)
         {
             Mediator m = GetMediator(panel);
             if (m != null)
             {
-                m.Display();
+
+                if (parent != null)
+                {
+                    m.transform.SetParent(parent, false);
+                }
                 _UITree.AddLeaf(panel, m);
+                m.Display();
             }
 
 			Log ();
@@ -230,15 +234,15 @@ namespace XUIF
 			if (go != null) {
                 GameObject panelGo = Instantiate(go);
                 panelGo.transform.SetParent(_Canvas, false);
-
                 panelGo.GetComponent<Panel> ().InitPanel ();
+                panelGo.name = panelGo.name.Replace("(Clone)", "");
 
                 try
                 {
                     System.Type m_type = ContextBinder.GetMediator(panel);
                     Mediator m = panelGo.AddComponent(m_type) as Mediator;
-                    m.OnRegister();
                     _mediatorDic.Add(panel, m);
+                    m.OnRegister();
                 }
                 catch
                 {
@@ -281,8 +285,20 @@ namespace XUIF
 					"PetInfo","UIPanel/PetInfoPanel"
 				}, {
 					"DetailInfo","UIPanel/DetailInfoPanel"
-				},
-			};
+                },
+                {
+                    "Email","UIPanel/EmailPanel"
+                },
+                {
+                    "Award","UIPanel/AwardPanel"
+                },
+                {
+                    "Letter","UIPanel/LetterPanel"
+                },
+                {
+                    "Notice","UIPanel/NoticePanel"
+                },
+            };
 		}
 
 		#endregion

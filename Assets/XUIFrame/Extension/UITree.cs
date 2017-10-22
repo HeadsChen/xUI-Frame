@@ -183,7 +183,7 @@ namespace XUIF
 				int lastIndex = -1;
 				lastIndex = str.LastIndexOf ('-');
 				if (lastIndex != -1) {
-					str.Remove (lastIndex);
+                    str = str.Remove(lastIndex);
 				}
 				str += ")";
 				return str;

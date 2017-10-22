@@ -16,8 +16,8 @@ public class HeroInfoPanel : Panel {
 		RegisterButton ("detail_info", detailInfoBtn);
 		RegisterButton ("hero_info_close", backBtn);
 
-		AddMessage ("hero_head", o => {
-			head.color = (Color)o;
+		AddMessage ("head", o => {
+			head.sprite = (Sprite)o;
 		});
 
 		AddMessage ("player_id", o => {

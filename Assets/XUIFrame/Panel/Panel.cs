@@ -45,6 +45,7 @@ namespace XUIF
         /// <param name="msgDelegate">消息委托</param>
         protected void AddMessage(string msgType,MessageCenter.MessageDelegate msgDelegate)
         {
+
             MessageCenter.AddMsgListener(msgType, msgDelegate);
         }
         

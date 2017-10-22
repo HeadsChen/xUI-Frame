@@ -23,14 +23,16 @@ namespace XUIF
 		#region 面板状态（生命周期）逻辑对外接口
 
 		/// <summary>
-		/// 视图面板初始化完成后启动。注册事件委托。
+		/// 视图面板初始化完成后注册事件委托。
+        /// 只在加载时调用一次。
 		/// </summary>
 		public virtual void OnRegister ()
 		{
 		}
-
+        
 		/// <summary>
 		/// 显示面板
+        /// 每次显示时调用
 		/// </summary>
 		public virtual void Display ()
 		{

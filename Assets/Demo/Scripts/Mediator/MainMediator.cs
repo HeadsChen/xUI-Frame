@@ -22,11 +22,23 @@ public class MainMediator : Mediator {
 
     public override void OnRegister()
     {
-		BindClickEvent ("hero_info", go => {
+		BindClickEvent ("Player_Info", go => {
 			OpenPanel ("HeroInfo");
 		});
 
-        
+        BindClickEvent("Email", go =>
+        {
+            OpenPanel("Email");
+        });
+
+        MessageCenter.SendMessage("player_id", "Heads");
+
+        MessageCenter.SendMessage("head", LoadImg("head"));
+    }
+
+    private Sprite LoadImg(string imgName)
+    {
+        return Resources.Load<Sprite>("Sprite/" + imgName);
     }
     
 }
