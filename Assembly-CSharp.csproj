@@ -45,19 +45,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Demo\Scripts\Launch.cs" />
+     <Compile Include="Assets\Demo\Scripts\Mediator\AwardMediator.cs" />
      <Compile Include="Assets\Demo\Scripts\Mediator\DetailInfoMediator.cs" />
+     <Compile Include="Assets\Demo\Scripts\Mediator\EmailMediator.cs" />
      <Compile Include="Assets\Demo\Scripts\Mediator\HeroInfoMediator.cs" />
+     <Compile Include="Assets\Demo\Scripts\Mediator\LetterMediator.cs" />
      <Compile Include="Assets\Demo\Scripts\Mediator\LoginMediator.cs" />
      <Compile Include="Assets\Demo\Scripts\Mediator\MainMediator.cs" />
+     <Compile Include="Assets\Demo\Scripts\Mediator\NoticeMediator.cs" />
      <Compile Include="Assets\Demo\Scripts\Mediator\PetInfoMediator.cs" />
      <Compile Include="Assets\Demo\Scripts\Mediator\RootMediator.cs" />
+     <Compile Include="Assets\Demo\Scripts\Panel\AwardPanel.cs" />
      <Compile Include="Assets\Demo\Scripts\Panel\DetailInfoPanel.cs" />
+     <Compile Include="Assets\Demo\Scripts\Panel\EmailPanel.cs" />
      <Compile Include="Assets\Demo\Scripts\Panel\HeroInfoPanel.cs" />
+     <Compile Include="Assets\Demo\Scripts\Panel\LetterPanel.cs" />
      <Compile Include="Assets\Demo\Scripts\Panel\LoginPanel.cs" />
      <Compile Include="Assets\Demo\Scripts\Panel\MainPanel.cs" />
+     <Compile Include="Assets\Demo\Scripts\Panel\NoticePanel.cs" />
      <Compile Include="Assets\Demo\Scripts\Panel\PetInfoPanel.cs" />
      <Compile Include="Assets\Demo\Scripts\Panel\RootPanel.cs" />
-     <Compile Include="Assets\Demo\Scripts\Singleton.cs" />
+     <Compile Include="Assets\XUIFrame\Config\ViewDefine.cs" />
      <Compile Include="Assets\XUIFrame\ContextBinder.cs" />
      <Compile Include="Assets\XUIFrame\EventDelegate\EventDispatcher.cs" />
      <Compile Include="Assets\XUIFrame\EventDelegate\EventTriggerListener.cs" />
@@ -67,7 +76,10 @@
      <Compile Include="Assets\XUIFrame\Mediator\Mediator.cs" />
      <Compile Include="Assets\XUIFrame\Panel\Panel.cs" />
      <Compile Include="Assets\XUIFrame\UIManager.cs" />
-     <Compile Include="Assets\XUIFrame\Utility\UnitySingleton.cs" />
+     <Compile Include="Assets\XUIFrame\UnitySingleton.cs" />
+     <Compile Include="Assets\XUIFrame\Utility\MediatorMgr.cs" />
+     <Compile Include="Assets\XUIFrame\Utility\ResLoader.cs" />
+     <Compile Include="Assets\XUIFrame\Utility\Singleton.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

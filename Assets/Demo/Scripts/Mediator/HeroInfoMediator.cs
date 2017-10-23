@@ -18,6 +18,11 @@ public class HeroInfoMediator : Mediator {
 			ClosePanel ();
 		});
 
+		BindClickEvent ("Return_Login", go => {
+			UIManager.Instance.PullToPanel("Login");
+		
+		});
+
 		//MessageCenter.SendMessage ("head","Sprite" );
 
 		MessageCenter.SendMessage ("player_id", "Heads");

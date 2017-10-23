@@ -9,12 +9,14 @@ public class HeroInfoPanel : Panel {
 	public GameObject petInfoBtn;
 	public GameObject detailInfoBtn;
 	public GameObject backBtn;
+	public GameObject returnLogin;
 
 	public override void InitPanel ()
 	{
 		RegisterButton ("pet_info", petInfoBtn);
 		RegisterButton ("detail_info", detailInfoBtn);
 		RegisterButton ("hero_info_close", backBtn);
+		RegisterButton ("Return_Login", returnLogin);
 
 		ReceiveMessage ("head", o => {
             //head.sprite = Resources.Load<Sprite>(o.ToString());

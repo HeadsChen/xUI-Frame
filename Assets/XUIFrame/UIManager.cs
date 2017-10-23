@@ -93,6 +93,7 @@ namespace XUIF
             Mediator m = GetMediator(name);
             if (m != null)
             {
+				
                 if (parent != null)
                 {
                     m.transform.SetParent(parent, false);
@@ -117,6 +118,23 @@ namespace XUIF
 
 			Log ();
         }
+
+
+		public void PullToPanel(string name){
+			Mediator[] hideArr = _UITree.Pull (name);
+			for (int i = 0; i < hideArr.Length; i++)
+			{
+				hideArr[i].Hide();
+			}
+
+			Mediator[] reactArr = _UITree.PeekEnd();
+			for (int i = 0; i < reactArr.Length; i++)
+			{
+				reactArr[i].Reactivate();
+			}
+
+			Log ();
+		}
 
         #endregion
 
