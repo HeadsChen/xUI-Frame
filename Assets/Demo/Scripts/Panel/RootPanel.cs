@@ -23,7 +23,7 @@ public class RootPanel : Panel
 
     public override void InitPanel()
     {
-        AddMessage("Mask", o =>
+        ReceiveMessage("Mask", o =>
         {
             root.color = (Color)o;
         });

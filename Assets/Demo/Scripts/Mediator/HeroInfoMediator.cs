@@ -18,7 +18,7 @@ public class HeroInfoMediator : Mediator {
 			ClosePanel ();
 		});
 
-		//MessageCenter.SendMessage ("head", );
+		//MessageCenter.SendMessage ("head","Sprite" );
 
 		MessageCenter.SendMessage ("player_id", "Heads");
 	}

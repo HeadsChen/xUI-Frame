@@ -43,7 +43,7 @@ namespace XUIF
         /// </summary>
         /// <param name="msgType">消息名</param>
         /// <param name="msgDelegate">消息委托</param>
-        protected void AddMessage(string msgType,MessageCenter.MessageDelegate msgDelegate)
+        protected void ReceiveMessage(string msgType,MessageCenter.MessageDelegate msgDelegate)
         {
 
             MessageCenter.AddMsgListener(msgType, msgDelegate);

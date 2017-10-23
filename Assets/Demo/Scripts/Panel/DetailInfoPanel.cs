@@ -13,15 +13,15 @@ public class DetailInfoPanel : Panel {
 	{
 		RegisterButton ("detail_info_close", closeBtn);
 
-		AddMessage ("detail1", o => {
+		ReceiveMessage ("detail1", o => {
 			detail1.ToString ();
 		});
 
-		AddMessage ("detail2", o => {
+		ReceiveMessage ("detail2", o => {
 			detail2.ToString ();
 		});
 
-		AddMessage ("detail3", o => {
+		ReceiveMessage ("detail3", o => {
 			detail3.ToString ();
 		});
 	}

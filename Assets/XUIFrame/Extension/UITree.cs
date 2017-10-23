@@ -19,6 +19,10 @@ using System.Collections.Generic;
 
 namespace XUIF
 {
+    /// <summary>
+    /// 类栈多叉树
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
 	public class UITree<T>
 	{
 		//根引用
@@ -29,13 +33,18 @@ namespace XUIF
 			get { return root; }
 		}
 
-		//叶引用
+		//末梢引用
 		private Node<T> end;
 
-		//叶引用属性
+		//末梢引用属性
 		public Node<T> End {
 			get{ return end; }
 		}
+
+
+        private List<Node<T>> nodeList;
+
+        private int lastIndex;
 
 		#region 构造器
 
@@ -48,6 +57,10 @@ namespace XUIF
 			Node<T> p = new Node<T> (id, val);
 			root = p;
 			end = p;
+
+            nodeList = new List<Node<T>>();
+            nodeList.Add(p);
+            lastIndex = 0;
 		}
         
 		#endregion
@@ -58,7 +71,8 @@ namespace XUIF
 		/// <returns></returns>
 		public bool NotOnlyRoot ()
 		{
-            return root.Id != end.Id;
+            //return root.Id != end.Id;
+            return lastIndex != 0;
 		}
 
 		#region 树结构逻辑
@@ -71,15 +85,11 @@ namespace XUIF
 		{
 			Node<T> node = new Node<T> (id, val, end);
 			end = node;
+
+            nodeList.Add(node);
+            lastIndex++;
 		}
-
-
-        public void PushEnd(string id,T val,Node<T> leafNode)
-        {
-			Node<T> node = new Node<T>(id, val, leafNode);
-            end = node;
-        }
-
+        
 		/// <summary>
 		/// Pops the end.
 		/// </summary>
@@ -90,14 +100,31 @@ namespace XUIF
 				T[] tArr = GetNodeArr ();
 				end.ClearChildren ();
 				end = end.Parent;
+
+                nodeList.RemoveAt(lastIndex--);
 				return tArr;
 			}
 
 			T t = end.Data;
 			end = end.Parent;
 
-			return new T[1] { t };
+            nodeList.RemoveAt(lastIndex--);
+            return new T[1] { t };
 		}
+
+
+        //public T[] PullTo(string id)
+        //{
+        //    int index = FindWithId(id);
+        //    if (index != -1)
+        //    {
+        //        T[] arr = new T[] { };
+        //        for (int i = nodeList.Count; i > index+1; i--)
+        //        {
+        //            arr+=PopEnd()
+        //        }
+        //    }
+        //}
 
 		/// <summary>
 		/// Peeks the end.
@@ -111,17 +138,7 @@ namespace XUIF
             }
             return new T[1] { end.Data };
 		}
-
-        /// <summary>
-        /// 移除前末梢
-        /// </summary>
-        public void RemoveExEnd()
-        {
-            Node<T> parent = end.Parent.Parent;
-            end.Parent.Parent = null;
-            end.Parent = parent;
-        }
-
+        
 		/// <summary>
 		/// Adds the leaf.
 		/// </summary>
@@ -142,12 +159,28 @@ namespace XUIF
 		public T RemoveLeaf(string id){
 			return end.RemoveChild (id);
 		}
-        
-		#endregion
 
-		#if UNITY_EDITOR
+        #endregion
 
-		#region 测试用！测试用！测试用！
+        /// <summary>
+        /// 查找指定id的节点
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        private int FindWithId(string id)
+        {
+            for (int i = 0; i < nodeList.Count; i++)
+            {
+                if (nodeList[i].Id == id)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+
 		private T[] GetNodeArr(){
 			int count = end.Children.Count;
 			T[] tArr = new T[count + 1];
@@ -157,6 +190,11 @@ namespace XUIF
 			tArr [count] = end.Data;
 			return tArr;
 		}
+
+
+        #if UNITY_EDITOR
+
+        #region 测试用！测试用！测试用！
 
         /// <summary>
         /// 遍历树结构
@@ -190,10 +228,10 @@ namespace XUIF
 			}
 			return "";
 		}
-		#endregion
+        #endregion
 
-		#endif
-	}
+        #endif
+    }
 
 	public class Node<T>
 	{
@@ -204,10 +242,8 @@ namespace XUIF
 		//父节点
 		private Node<T> parent;
 		//孩子集
-//		private Dictionary<string, Node<T>> children;
 		private List<Node<T>> children;
-
-
+        
 		#region 构造器
 
 		public Node (string id, T val, Node<T> p)
@@ -253,7 +289,6 @@ namespace XUIF
             set { parent = value; }
         }
 
-
         public List<Node<T>> Children
         {
             get { return children; }
@@ -280,17 +315,17 @@ namespace XUIF
 		/// </summary>
 		/// <param name="node">叶节点名</param>
 		/// <returns></returns>
-		public bool TryGetChild (string id,out T child)
+		public bool TryGetChild (string id,out Node<T> child)
 		{
 			if (HaveChildren()) {
 				for (int i = 0; i < children.Count; i++) {
 					if (children [i].Id == id) {
-						child = children [i].Data;
+						child = children [i];
 						return true;
 					}
 				}
 			}
-			child = default(T);
+            child = null;
 			return false;
 		}
 

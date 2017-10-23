@@ -55,7 +55,7 @@ public class EmailMediator : Mediator {
 
     private void SelectLabel(GameObject go)
     {
-        string name = go.name + "Panel";
+        string name = go.name;
         Transform subPanel = panel.FindChild(name);
         if (subPanel != null)
         {
@@ -63,7 +63,7 @@ public class EmailMediator : Mediator {
             return;
         }
         Debug.LogFormat("SubPanel {0} could not show.Please check gameobject {1}",
-                    name, "Label/" + go.name);
+                    name, "Panel/" + go.name);
     }
 
     private Transform panel;

@@ -41,11 +41,11 @@ public class MainPanel : Panel {
         RegisterButton("Friend", friend);
         RegisterButton("Setting", setting);
 
-        AddMessage("player_id", o => gameId.text = o.ToString());
+        ReceiveMessage("player_id", o => gameId.text = o.ToString());
 
         //TODO
         //更换头像
-        AddMessage("head", o => {
+        ReceiveMessage("head", o => {
             head.sprite = (Sprite)o;
         });
     }

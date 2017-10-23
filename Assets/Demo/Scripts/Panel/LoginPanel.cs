@@ -27,7 +27,7 @@ public class LoginPanel : Panel {
     {
         RegisterButton("login", loginBtn);
 
-        AddMessage("login_title", o =>
+        ReceiveMessage("login_title", o =>
         {
             loginTitle.text = o.ToString();
         });

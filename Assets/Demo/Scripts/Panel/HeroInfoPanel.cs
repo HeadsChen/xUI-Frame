@@ -16,11 +16,11 @@ public class HeroInfoPanel : Panel {
 		RegisterButton ("detail_info", detailInfoBtn);
 		RegisterButton ("hero_info_close", backBtn);
 
-		AddMessage ("head", o => {
-			head.sprite = (Sprite)o;
+		ReceiveMessage ("head", o => {
+            //head.sprite = Resources.Load<Sprite>(o.ToString());
 		});
 
-		AddMessage ("player_id", o => {
+		ReceiveMessage ("player_id", o => {
 			playerId.text = o.ToString ();
 		});
 	}

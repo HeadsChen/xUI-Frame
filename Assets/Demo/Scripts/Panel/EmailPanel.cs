@@ -35,7 +35,7 @@ public class EmailPanel : Panel {
         RegisterButton("Get_All", getAll);
         RegisterButton("Close_Email", close);
 
-        AddMessage("bottom_notice", o =>
+        ReceiveMessage("bottom_notice", o =>
         {
             bottomNotice.text = o.ToString();
         });

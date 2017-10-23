@@ -18,6 +18,10 @@ using System.Collections.Generic;
 
 namespace XUIF
 {
+    /// <summary>
+    /// UI环境绑定
+    /// 注入调度器
+    /// </summary>
     class ContextBinder 
     {
         static Dictionary<string, System.Type> _dic = new Dictionary<string, System.Type> {
@@ -34,13 +38,17 @@ namespace XUIF
             {"Award",typeof(AwardMediator) },
         };
 
-
-
-
-        public static System.Type GetMediator(string mStr)
+        public static Mediator Bind(Panel panel,string name)
         {
-            return _dic.ContainsKey(mStr) ? _dic[mStr] : null;
+            if (!_dic.ContainsKey(name))
+            {
+                Debug.LogErrorFormat("{0} panel faid to bind mediator.Cause Mediator Dictionary does not contains {1}", name, name);
+                return null;
+            }
+
+            return panel.gameObject.AddComponent(_dic[name]) as Mediator;
         }
+        
     }
 }
 

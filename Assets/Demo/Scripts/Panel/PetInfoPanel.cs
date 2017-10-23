@@ -13,11 +13,11 @@ public class PetInfoPanel : Panel {
 	{
 		RegisterButton ("pet_info_close", closeBtn);
 
-		AddMessage ("pet_info1", o => {
+		ReceiveMessage ("pet_info1", o => {
 			petInfo1.text = o.ToString ();
 		});
 
-		AddMessage ("pet_info2", o => {
+		ReceiveMessage ("pet_info2", o => {
 			petInfo2.text = o.ToString ();
 		});
 	}
