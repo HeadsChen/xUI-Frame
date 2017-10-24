@@ -45,7 +45,7 @@ public class EmailMediator : Mediator {
             ClosePanel();
         });
     }
-
+    
     public override void Display()
     {
         base.Display();
@@ -76,7 +76,8 @@ public class EmailMediator : Mediator {
 
         for (int i = 0; i < nameArr.Length; i++)
         {
-            UIManager.Instance.OpenSubPanel(nameArr[i], panel);
+            Mediator m = UIManager.Instance.OpenSubPanel(nameArr[i]);
+            m.transform.SetParent(panel, false);
         }
     }
 

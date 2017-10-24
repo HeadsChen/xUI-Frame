@@ -20,42 +20,41 @@ using System.Collections.Generic;
 namespace XUIF
 {
     /// <summary>
-    /// 树形栈封装
+    /// 类栈多叉树
     /// </summary>
     /// <typeparam name="T"></typeparam>
-	public class TreeStack<T>
+	public class UIListTree<T>
     {
-        #region 根末节点
-        //根引用
-        private Node<T> root;
-
         //根引用属性
-        public Node<T> Root
+        public ListNode<T> Root
         {
-            get { return root; }
+            get { return nodeList[0]; }
         }
-
-        //末梢引用
-        private Node<T> end;
 
         //末梢引用属性
-        public Node<T> End
+        public ListNode<T> End
         {
-            get { return end; }
+            get { return nodeList[lastIndex]; }
         }
-        #endregion
+
+
+        private List<ListNode<T>> nodeList;
+
+        private int lastIndex;
 
         #region 构造器
 
         /// <summary>
-        /// 创建新节点，并作为新树根节点及末梢节点
+        /// 创建新节点，并作为新树根节点及叶节点
         /// </summary>
         /// <param name="val">Value.</param>
-        public TreeStack(string id, T val)
+        public UIListTree(string id, T val)
         {
-            Node<T> p = new Node<T>(id, val);
-            root = p;
-            end = p;
+            ListNode<T> p = new ListNode<T>(id, val);
+
+            nodeList = new List<ListNode<T>>();
+            nodeList.Add(p);
+            lastIndex = 0;
         }
 
         #endregion
@@ -64,91 +63,100 @@ namespace XUIF
         /// 判断是否只有根节点
         /// </summary>
         /// <returns></returns>
-        public bool NotOnlyRoot
+        public bool NotOnlyRoot()
         {
             //return root.Id != end.Id;
-            get { return root.Id != end.Id; }
+            return lastIndex != 0;
         }
 
-        #region 结构逻辑 对外接口
+        #region 树结构逻辑
 
         /// <summary>
-        /// 添加末梢
+        /// Pushs the end.
         /// </summary>
         /// <param name="val">Value.</param>/
-        public void Push(string id, T val)
+        public void PushEnd(string id, T val)
         {
-            Node<T> node = new Node<T>(id, val, end);
-            end = node;
+            ListNode<T> node = new ListNode<T>(id, val, nodeList[lastIndex]);
+
+            nodeList.Add(node);
+            lastIndex++;
         }
 
         /// <summary>
-        /// 取出多个 直到指定节点
+        /// Pops the end.
         /// </summary>
-        /// <param name="id">指定节点名</param>
-        /// <returns></returns>
-        public T[] Pull(string id = null)
+        /// <returns>The end.</returns>//
+        public T[] PopEnd()
         {
-            if (string.IsNullOrEmpty(id))
+            if (nodeList[lastIndex].HaveChildren())
             {
-                return PopEnd();
+                T[] tArr = EndNodeDataArr();
+
+                nodeList[lastIndex].ClearChildren();
+                nodeList.RemoveAt(lastIndex--);
+                return tArr;
             }
-            if (ContainsNode(id, end))
+
+            T t = nodeList[lastIndex].Data;
+            nodeList.RemoveAt(lastIndex--);
+            return new T[1] { t };
+        }
+
+
+        public T[] Pull(string id)
+        {
+            int index = FindWithId(id);
+            if (index != -1)
             {
-                List<Node<T>> list = new List<Node<T>>();
-                do
+                List<ListNode<T>> list = new List<ListNode<T>>();
+                for (int i = lastIndex; i > index + 1; i--)
                 {
-                    if (end.HaveChildren())
-                    {
-                        end.GetChildrenByList(ref list);
-                        end.ClearChildren();
-                    }
-                    list.Add(end);
-                    end = end.Parent;
-                } while (end.Id != id);
+                    nodeList[i].GetChildrenByList(ref list);
+                    list.Add(nodeList[i]);
+                    nodeList[i].ClearChildren();
+                }
+                nodeList.RemoveRange(index + 1, lastIndex - index);
+
+                lastIndex = index;
                 return GetListDataArr(list);
             }
             return null;
         }
 
         /// <summary>
-        /// 获得末梢 不取出
+        /// Peeks the end.
         /// </summary>
         /// <returns>The end.</returns>/
-        public T[] Peek()
+        public T[] PeekEnd()
         {
-            if (end.HaveChildren())
+            if (nodeList[lastIndex].HaveChildren())
             {
-                List<Node<T>> list = new List<Node<T>>();
-                end.GetChildrenByList(ref list);
-                list.Add(end);
-                return GetListDataArr(list);
+                return EndNodeDataArr();
             }
-
-            T t = end.Data;
-            return new T[1] { t };
+            return new T[1] { nodeList[lastIndex].Data };
         }
 
         /// <summary>
-        /// 添加叶节点
+        /// Adds the leaf.
         /// </summary>
         /// <param name="id">Id.</param>
         /// <param name="leaf">Leaf.</param>
         public void AddLeaf(string id, T leaf)
         {
-            if (end.ContainsChild(id))
+            if (nodeList[lastIndex].ContainsChild(id))
                 return;
-            end.AddChild(id, leaf);
+            nodeList[lastIndex].AddChild(id, leaf);
         }
 
         /// <summary>
-        /// 移除叶节点
+        /// Removes the leaf.
         /// </summary>
         /// <returns>The leaf.</returns>
         /// <param name="leaf">Leaf.</param>
         public T RemoveLeaf(string id)
         {
-            return end.RemoveChild(id).Data;
+            return nodeList[lastIndex].RemoveChild(id).Data;
         }
 
         #endregion
@@ -156,54 +164,43 @@ namespace XUIF
         #region 私有方法
 
         /// <summary>
-        /// 取出末梢
-        /// </summary>
-        /// <returns>The end.</returns>//
-        private T[] PopEnd()
-        {
-            if (end.HaveChildren())
-            {
-                List<Node<T>> list = new List<Node<T>>();
-
-                end.GetChildrenByList(ref list);
-                end.ClearChildren();
-                list.Add(end);
-                end = end.Parent;
-                return GetListDataArr(list);
-            }
-
-            T t = end.Data;
-            end = end.Parent;
-            return new T[1] { t };
-        }
-
-        /// <summary>
         /// 查找指定id的节点
         /// </summary>
         /// <param name="id"></param>
         /// <param name="node"></param>
         /// <returns></returns>
-        private bool ContainsNode(string id,Node<T> node)
+        private int FindWithId(string id)
         {
-            if (node.Id == id)
+            for (int i = 0; i < nodeList.Count; i++)
             {
-                return true;
+                if (nodeList[i].Id == id)
+                {
+                    return i;
+                }
             }
-
-            if (node.Parent != null)
-            {
-                return ContainsNode(id, node.Parent);
-            }
-            return false;
+            return -1;
         }
-        
+
         /// <summary>
-        /// 取得节点链表中的数据数组
+        /// Ends the node data arr.
+        /// </summary>
+        /// <returns>The node data arr.</returns>
+        private T[] EndNodeDataArr()
+        {
+            List<ListNode<T>> list = new List<ListNode<T>>();
+            nodeList[lastIndex].GetChildrenByList(ref list);
+            list.Add(nodeList[lastIndex]);
+            return GetListDataArr(list);
+        }
+
+        /// <summary>
+        /// Gets the node data arr.
         /// </summary>
         /// <returns>The node data arr.</returns>
         /// <param name="list">List.</param>
-        private T[] GetListDataArr(List<Node<T>> list)
+        private T[] GetListDataArr(List<ListNode<T>> list)
         {
+
             T[] tArr = new T[list.Count];
             for (int i = 0; i < list.Count; i++)
             {
@@ -223,7 +220,7 @@ namespace XUIF
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        public string Traverse(Node<T> node)
+        public string Traverse(ListNode<T> node)
         {
             string idStr = node.Id + GetChildrenId(node);
             if (node.Parent != null)
@@ -234,13 +231,13 @@ namespace XUIF
             return idStr;
         }
 
-        private string GetChildrenId(Node<T> node)
+        private string GetChildrenId(ListNode<T> node)
         {
             if (node.HaveChildren())
             {
                 string str = "(";
 
-                List<Node<T>> list = new List<Node<T>>();
+                List<ListNode<T>> list = new List<ListNode<T>>();
                 node.GetChildrenByList(ref list);
                 for (int i = 0; i < list.Count; i++)
                 {
@@ -262,31 +259,38 @@ namespace XUIF
 #endif
     }
 
-    public class Node<T>
+    public class ListNode<T>
     {
         //节点ID
         private string id;
         //数据域
         private T data;
         //父节点
-        private Node<T> parent;
+        private ListNode<T> parent;
         //孩子集
-        private Dictionary<string, Node<T>> children;
+        private Dictionary<string, ListNode<T>> children;
 
         #region 构造器
 
-        public Node(string id, T val, Node<T> p)
+        public ListNode(string id, T val, ListNode<T> p)
         {
             this.id = id;
             data = val;
             parent = p;
         }
 
-        public Node(string id, T val)
+        public ListNode(string id, T val)
         {
             this.id = id;
             data = val;
             parent = null;
+        }
+
+        public ListNode(string id, ListNode<T> p)
+        {
+            this.id = id;
+            data = default(T);
+            parent = p;
         }
 
         #endregion
@@ -306,7 +310,7 @@ namespace XUIF
         }
 
         //父节点属性
-        public Node<T> Parent
+        public ListNode<T> Parent
         {
             get { return parent; }
             set { parent = value; }
@@ -323,9 +327,9 @@ namespace XUIF
         {
             if (children == null)
             {
-                children = new Dictionary<string, Node<T>>();
+                children = new Dictionary<string, ListNode<T>>();
             }
-            Node<T> node = new Node<T>(id, val, this);
+            ListNode<T> node = new ListNode<T>(id, val, this);
             children.Add(id, node);
         }
 
@@ -334,26 +338,23 @@ namespace XUIF
         /// </summary>
         /// <param name="node">叶节点名</param>
         /// <returns></returns>
-        public bool TryGetChild(string id, out Node<T> child)
+        public bool TryGetChild(string id, out ListNode<T> child)
         {
-            child = null;
-            if (HaveChildren())
-            {
-                child = children.GetValue(id);
-                return true;
-            }
-            return false;
+            return children.TryGetValue(id, out child);
         }
 
         /// <summary>
         /// Gets the children by list.
         /// </summary>
         /// <param name="list">List.</param>
-        public void GetChildrenByList(ref List<Node<T>> list)
+        public void GetChildrenByList(ref List<ListNode<T>> list)
         {
-            foreach (Node<T> child in children.Values)
+            if (HaveChildren())
             {
-                list.Add(child);
+                foreach (ListNode<T> child in children.Values)
+                {
+                    list.Add(child);
+                }
             }
         }
 
@@ -381,11 +382,11 @@ namespace XUIF
         /// </summary>
         /// <param name="node">叶节点名</param>
         /// <returns></returns>
-        public Node<T> RemoveChild(string id)
+        public ListNode<T> RemoveChild(string id)
         {
-            if (children.includeKey(id))
+            if (children.ContainsKey(id))
             {
-                Node<T> node = children.GetValue(id);
+                ListNode<T> node = children.GetValue(id);
                 children.Remove(id);
                 return node;
             }
@@ -397,7 +398,10 @@ namespace XUIF
         /// </summary>
         public void ClearChildren()
         {
-            children.Clear();
+            if (children != null)
+            {
+                children.Clear();
+            }
         }
 
         /// <summary>

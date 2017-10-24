@@ -16,15 +16,13 @@
  */
 
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace XUIF
 {
 	public class UIManager : Singleton<UIManager>
 	{      
         //维护UI树
-        UITree<Mediator> _UITree;
+        TreeStack<Mediator> _UITree;
 
 		private UIManager()
 		{
@@ -46,15 +44,15 @@ namespace XUIF
             Mediator m = GetMediator(name);
             if (m != null)
             {
-                if (_UITree.NotOnlyRoot())
+                if (_UITree.NotOnlyRoot)
                 {
-                    Mediator[] freezeArr = _UITree.PeekEnd();
+                    Mediator[] freezeArr = _UITree.Peek();
                     for (int i = 0; i < freezeArr.Length; i++)
                     {
                         freezeArr[i].Freeze();
                     }
                 }
-                _UITree.PushEnd(name, m);
+                _UITree.Push(name, m);
                 m.Display();
             }
 
@@ -64,51 +62,48 @@ namespace XUIF
         }
 
         /// <summary>
-        /// 关闭末梢面板，重激活前末梢面板
+        /// 退回至指定视图 无指定则返回上一级
         /// </summary>
-		public void ClosePanel(){
-            Mediator[] hideArr = _UITree.PopEnd();
+        /// <param name="name">指定视图名</param>
+		public void Return2Panel(string name = null)
+        {
+            Mediator[] hideArr = _UITree.Pull(name);
             for (int i = 0; i < hideArr.Length; i++)
             {
                 hideArr[i].Hide();
             }
 
-            Mediator[] reactArr = _UITree.PeekEnd();
+            Mediator[] reactArr = _UITree.Peek();
             for (int i = 0; i < reactArr.Length; i++)
             {
                 reactArr[i].Reactivate();
             }
 
-			Log ();
-		}        
+            Log();
+        } 
 
         /// <summary>
-        /// 打开子视图
+        /// 打开并列子视图
         /// </summary>
         /// <param name="name">视图名</param>
         /// <param name="parent">父视图</param>
         /// <returns></returns>
-        public bool OpenSubPanel(string name,Transform parent=null)
+        public Mediator OpenSubPanel(string name)
         {
             Mediator m = GetMediator(name);
             if (m != null)
             {
-				
-                if (parent != null)
-                {
-                    m.transform.SetParent(parent, false);
-                }
                 _UITree.AddLeaf(name, m);
                 m.Display();
             }
 
 			Log ();
 
-            return m != null;
+            return m;
         }
 
         /// <summary>
-        /// 关闭子面板
+        /// 关闭子视图
         /// </summary>
         /// <param name="panel"></param>
         public void CloseSubPanel(string panel)
@@ -118,23 +113,6 @@ namespace XUIF
 
 			Log ();
         }
-
-
-		public void PullToPanel(string name){
-			Mediator[] hideArr = _UITree.Pull (name);
-			for (int i = 0; i < hideArr.Length; i++)
-			{
-				hideArr[i].Hide();
-			}
-
-			Mediator[] reactArr = _UITree.PeekEnd();
-			for (int i = 0; i < reactArr.Length; i++)
-			{
-				reactArr[i].Reactivate();
-			}
-
-			Log ();
-		}
 
         #endregion
 
@@ -146,11 +124,12 @@ namespace XUIF
         private void CreateTree()
         {
             Mediator m = GetMediator("Root");
-            _UITree = new UITree<Mediator>("Root", m);
             if (m != null)
             {
-                Debug.Log("UI Tree created.");
+                _UITree = new TreeStack<Mediator>("Root", m);
+                return;
             }
+            Debug.LogErrorFormat("UI TreeStack failed to create.Cause:could not find the mediator {0}", "Root");
         }
                 
         #endregion

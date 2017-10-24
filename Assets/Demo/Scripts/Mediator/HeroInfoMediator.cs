@@ -19,7 +19,7 @@ public class HeroInfoMediator : Mediator {
 		});
 
 		BindClickEvent ("Return_Login", go => {
-			UIManager.Instance.PullToPanel("Login");
+			UIManager.Instance.Return2Panel("Login");
 		
 		});
 

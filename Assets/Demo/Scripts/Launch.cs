@@ -24,8 +24,4 @@ public class Launch : MonoBehaviour {
         Singleton<UIManager>.Create();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

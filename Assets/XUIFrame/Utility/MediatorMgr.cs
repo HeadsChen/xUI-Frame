@@ -97,23 +97,19 @@ namespace XUIF
                     Panel panel = panelGo.GetComponent<Panel>();
                     panel.InitPanel();
                     m = ContextBinder.Bind(panel, name);
+                    m.OnRegister();
                     _mDic.Add(name, m);
                 }
                 catch(System.Exception e)
                 {
+                    GameObject.Destroy(panelGo);
                     Debug.LogErrorFormat("Mediator not set to {0} Panel.Cause:{1}", name, e.Message);
-                }
-
-                if (m != null)
-                {
-                    m.OnRegister();
                 }
                 return;
             }
 
             Debug.LogWarningFormat("The Panel {0} prefab is nonexistent.Please check the path:{1}",
                 name, _pathDic[name]);
-
         }
 
         /// <summary>

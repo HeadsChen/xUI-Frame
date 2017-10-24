@@ -80,22 +80,37 @@ namespace XUIF
 			}
 		}
 
-		/// <summary>
-		/// 通知管理者打开其他面板
-		/// </summary>
-		/// <param name="panel">新面板名</param>
-		protected void OpenPanel (string panel)
-		{
-			UIManager.Instance.OpenPanel (panel);
-		}
+        /// <summary>
+        /// 通知管理者打开其他面板
+        /// </summary>
+        /// <param name="panel">新面板名</param>
+        protected void OpenPanel(string panel, bool isSub = false)
+        {
+            if (isSub)
+            {
+                Singleton<UIManager>.Instance.OpenSubPanel(panel);
+                return;
+            }
+            UIManager.Instance.OpenPanel(panel);
+        }
 
-		/// <summary>
-		/// 通知管理者回收并关闭该面板
-		/// </summary>
-		protected void ClosePanel ()
-		{
-			UIManager.Instance.ClosePanel ();
-		}
+        /// <summary>
+        /// 通知管理者回收并关闭该面板
+        /// </summary>
+        protected void ClosePanel(string panel = null, bool isSub = false)
+        {
+            if (isSub)
+            {
+                if (string.IsNullOrEmpty(panel))
+                {
+                    Debug.LogErrorFormat("Close SubPanel must assign a subpanel name.");
+                    return;
+                }
+                Singleton<UIManager>.Instance.CloseSubPanel(panel);
+                return;
+            }
+            UIManager.Instance.Return2Panel(panel);
+        }
 
 		#endregion
 

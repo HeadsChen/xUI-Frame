@@ -23,7 +23,7 @@ public class EmailPanel : Panel {
     public GameObject letterLabel;
     public GameObject awardLabel;
     public GameObject getAll;
-    public GameObject close;
+    //public GameObject close;
 
     public Text bottomNotice;
 
@@ -33,7 +33,7 @@ public class EmailPanel : Panel {
         RegisterButton("Letter", letterLabel);
         RegisterButton("Award", awardLabel);
         RegisterButton("Get_All", getAll);
-        RegisterButton("Close_Email", close);
+        //RegisterButton("Close_Email", close);
 
         ReceiveMessage("bottom_notice", o =>
         {

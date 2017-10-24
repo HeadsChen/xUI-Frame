@@ -7,11 +7,11 @@ public class PetInfoPanel : Panel {
 
 	public Text petInfo1;
 	public Text petInfo2;
-	public GameObject closeBtn;
+	//public GameObject closeBtn;
 
 	public override void InitPanel ()
 	{
-		RegisterButton ("pet_info_close", closeBtn);
+		//RegisterButton ("pet_info_close", closeBtn);
 
 		ReceiveMessage ("pet_info1", o => {
 			petInfo1.text = o.ToString ();
