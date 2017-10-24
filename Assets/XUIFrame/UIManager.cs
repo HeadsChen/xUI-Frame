@@ -55,9 +55,6 @@ namespace XUIF
                 _UITree.Push(name, m);
                 m.Display();
             }
-
-			Log ();
-
             return m != null;
         }
 
@@ -78,8 +75,6 @@ namespace XUIF
             {
                 reactArr[i].Reactivate();
             }
-
-            Log();
         } 
 
         /// <summary>
@@ -96,9 +91,6 @@ namespace XUIF
                 _UITree.AddLeaf(name, m);
                 m.Display();
             }
-
-			Log ();
-
             return m;
         }
 
@@ -110,8 +102,6 @@ namespace XUIF
         {
             Mediator m = _UITree.RemoveLeaf(panel);
             m.Hide();
-
-			Log ();
         }
 
         #endregion
@@ -145,10 +135,9 @@ namespace XUIF
 		}
 
 		#region 测试用
-		private void Log(){
-			Debug.LogFormat ("Current UI Tree contains : {0}", _UITree.Traverse (_UITree.End));
+		public string Log(){
 
-			Debug.LogFormat ("Current panel is {0}", _UITree.End.Id);
+			return string.Format ("Current UI Tree contains:\n{0}\nCurrent panel is {1} ", _UITree.Traverse (_UITree.End), _UITree.End.Id);
 		}
 		#endregion
 

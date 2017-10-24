@@ -15,6 +15,7 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 using XUIF;
 
 public class Launch : MonoBehaviour {
@@ -23,5 +24,11 @@ public class Launch : MonoBehaviour {
 	void Start () {
         Singleton<UIManager>.Create();
 	}
-	
+
+
+	void OnGUI(){
+
+		GUI.Label (new Rect (400, 10, 600, 100), Singleton<UIManager>.Instance.Log ());
+
+	}
 }
