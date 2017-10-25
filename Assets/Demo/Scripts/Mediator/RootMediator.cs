@@ -1,12 +1,12 @@
 ﻿/***
  *    Project:
- *		  ***
+ *		  xUI Frame
  *    Title: 
- *		  ***
+ *		  Root Mediator
  *    Description: 
- *        ***
+ *        Demo root
  *                  
- *    Date: 2017
+ *    Date: 2017/10/22
  *    Version: 0.1
  *    Modify Recoder: 
  *    
@@ -20,7 +20,7 @@ public class RootMediator : Mediator {
 
     public override void OnRegister()
     {
-        MessageCenter.SendMessage("Mask", new Color(0, 0, 0, 0));
+        MessageCenter.SendMsg("Mask", new Color(0, 0, 0, 0));
         gameObject.SetActive(false);
     }
 

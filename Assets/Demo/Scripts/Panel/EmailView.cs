@@ -17,7 +17,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using XUIF;
 
-public class EmailPanel : Panel {
+public class EmailView : View {
     
     public GameObject noticeLabel;
     public GameObject letterLabel;
@@ -27,7 +27,7 @@ public class EmailPanel : Panel {
 
     public Text bottomNotice;
 
-    public override void InitPanel()
+    public override void InitView()
     {
         RegisterButton("Notice", noticeLabel);
         RegisterButton("Letter", letterLabel);

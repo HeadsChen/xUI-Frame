@@ -37,52 +37,68 @@ public class EmailMediator : Mediator {
 
         BindClickEvent("Get_All", go =>
         {
-            MessageCenter.SendMessage("bottom_notice", "All Email have been read.");
+            MessageCenter.SendMsg("bottom_notice", "All Email have been read.");
         });
 
-        BindClickEvent("Close_Email", go =>
-        {
-            ClosePanel();
-        });
+        InitEmail();
     }
     
     public override void Display()
     {
         base.Display();
 
-        SetSubPanel();
+        OrderLabel();
+    }
+    
+    /// <summary>
+    /// 标签排序 显示第一个有邮件的标签
+    ///没有则显示第一个
+    /// </summary>
+    private void OrderLabel()
+    {
+
     }
 
     private void SelectLabel(GameObject go)
     {
-        string name = go.name;
-        Transform subPanel = panel.FindChild(name);
-        if (subPanel != null)
-        {
-            subPanel.SetAsLastSibling();
-            return;
-        }
-        Debug.LogFormat("SubPanel {0} could not show.Please check gameobject {1}",
-                    name, "Panel/" + go.name);
+        go.transform.SetAsLastSibling();
+        //string name = go.name;
+        //Transform subPanel = panel.FindChild(name);
+        //if (subPanel != null)
+        //{
+        //    subPanel.SetAsLastSibling();
+        //    return;
+        //}
+        //Debug.LogFormat("SubPanel {0} could not show.Please check gameobject {1}",
+        //            name, "Panel/" + go.name);
     }
 
-    private Transform panel;
-
-    private void SetSubPanel()
+    /// <summary>
+    /// 初始化信箱
+    /// </summary>
+    private void InitEmail()
     {
-        string[] nameArr = GetSubPanelNameArr();
 
-        panel = transform.GetChild(transform.childCount - 1);
-
-        for (int i = 0; i < nameArr.Length; i++)
-        {
-            Mediator m = UIManager.Instance.OpenSubPanel(nameArr[i]);
-            m.transform.SetParent(panel, false);
-        }
     }
 
-    private string[] GetSubPanelNameArr()
-    {
-        return new string[3] { "Award", "Letter", "Notice" };
-    }
+
+    //private Transform panel;
+
+    //private void SetSubPanel()
+    //{
+    //    string[] nameArr = GetSubPanelNameArr();
+
+    //    panel = transform.GetChild(transform.childCount - 1);
+
+    //    for (int i = 0; i < nameArr.Length; i++)
+    //    {
+    //        Mediator m = UIManager.Instance.OpenSubPanel(nameArr[i]);
+    //        m.transform.SetParent(panel, false);
+    //    }
+    //}
+
+    //private string[] GetSubPanelNameArr()
+    //{
+    //    return new string[3] { "Award", "Letter", "Notice" };
+    //}
 }

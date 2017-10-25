@@ -2,9 +2,9 @@
  *    Project:
  *		  xUI Frame
  *    Title: 
- *		  Base Panel
+ *		  Base View
  *    Description: 
- *        All the UI Panel inherit it.
+ *        All the UI View inherit it.
  *                  
  *    Date: 2017/10/19
  *    Version: 0.1
@@ -17,13 +17,13 @@ using UnityEngine;
 
 namespace XUIF
 {
-    public class Panel : MonoBehaviour
+    public class View : MonoBehaviour
     {
 
         /// <summary>
         /// 初始化视图面板，将隶属该视图的UI控件注册到事件派发器或消息中心
         /// </summary>
-        public virtual void InitPanel()
+        public virtual void InitView()
         {
 
         }
@@ -33,7 +33,7 @@ namespace XUIF
         /// </summary>
         /// <param name="eventName">事件名</param>
         /// <param name="go">注册对象</param>
-        protected void RegisterButton(string eventName,GameObject go)
+        protected void RegisterButton(string eventName, GameObject go)
         {
             EventDispatcher.BindButton(eventName, go);
         }
@@ -43,12 +43,10 @@ namespace XUIF
         /// </summary>
         /// <param name="msgType">消息名</param>
         /// <param name="msgDelegate">消息委托</param>
-        protected void ReceiveMessage(string msgType,MessageCenter.MessageDelegate msgDelegate)
+        protected void ReceiveMessage(string msgType, ContextModel.MessageDelegate msgDelegate)
         {
-
-            MessageCenter.AddMsgListener(msgType, msgDelegate);
+            MessageCenter.AddListner(msgType, msgDelegate);
         }
-        
     }
 }
 

@@ -1,12 +1,12 @@
 ﻿/***
  *    Project:
- *		  ***
+ *		  xUI Frame
  *    Title: 
- *		  ***
+ *		  Login Mediator
  *    Description: 
- *        ***
+ *        Demo Login
  *                  
- *    Date: 2017/10/21
+ *    Date: 2017/10/22
  *    Version: 0.1
  *    Modify Recoder: 
  *    
@@ -28,7 +28,7 @@ public class LoginMediator : Mediator {
             OpenPanel("Main");
         });
 
-        MessageCenter.SendMessage("login_title", GetText("login_title"));
+        MessageCenter.SendMsg("login_title", GetText("login_title"));
     }
 
     string GetText(string strId)

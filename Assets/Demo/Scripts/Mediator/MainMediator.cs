@@ -1,12 +1,12 @@
 ﻿/***
  *    Project:
- *		  ***
+ *		  xUI Frame
  *    Title: 
- *		  ***
+ *		  Main Mediator
  *    Description: 
- *        ***
+ *        Demo Main
  *                  
- *    Date: 2017
+ *    Date: 2017/10/22
  *    Version: 0.1
  *    Modify Recoder: 
  *    
@@ -31,9 +31,9 @@ public class MainMediator : Mediator {
             OpenPanel("Email");
         });
 
-        MessageCenter.SendMessage("player_id", "Heads");
+        MessageCenter.SendMsg("player_id", "Heads");
 
-        MessageCenter.SendMessage("head", LoadImg("head"));
+        MessageCenter.SendMsg("head", LoadImg("head"));
     }
 
     private Sprite LoadImg(string imgName)

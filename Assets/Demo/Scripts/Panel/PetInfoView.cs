@@ -1,15 +1,30 @@
-﻿using UnityEngine;
+﻿/***
+ *    Project:
+ *		  xUI Frame
+ *    Title: 
+ *		  Pet Information Panel
+ *    Description: 
+ *        Demo Pet Information
+ *                  
+ *    Date: 2017/10/22
+ *    Version: 0.1
+ *    Modify Recoder: 
+ *    
+ *   
+ */
+
+using UnityEngine;
 using UnityEngine.UI;
 using XUIF;
 
 
-public class PetInfoPanel : Panel {
+public class PetInfoView : View {
 
 	public Text petInfo1;
 	public Text petInfo2;
 	//public GameObject closeBtn;
 
-	public override void InitPanel ()
+	public override void InitView ()
 	{
 		//RegisterButton ("pet_info_close", closeBtn);
 

@@ -4,9 +4,9 @@
  *    Title: 
  *		  Close View
  *    Description: 
- *        ***
+ *        Close self panel
  *                  
- *    Date: 2017
+ *    Date: 2017/10/25
  *    Version: 0.1
  *    Modify Recoder: 
  *    

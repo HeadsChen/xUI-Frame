@@ -1,4 +1,19 @@
-﻿using UnityEngine;
+﻿/***
+ *    Project:
+ *		  xUI Frame
+ *    Title: 
+ *		  Hero Information Mediator
+ *    Description: 
+ *        Demo Hero Information
+ *                  
+ *    Date: 2017/10/22
+ *    Version: 0.1
+ *    Modify Recoder: 
+ *    
+ *   
+ */
+
+
 using XUIF;
 
 
@@ -14,10 +29,6 @@ public class HeroInfoMediator : Mediator {
 			UIManager.Instance.OpenSubPanel("PetInfo");
 		});
 
-		BindClickEvent ("hero_info_close", go => {
-			ClosePanel ();
-		});
-
 		BindClickEvent ("Return_Login", go => {
 			UIManager.Instance.Return2Panel("Login");
 		
@@ -25,7 +36,7 @@ public class HeroInfoMediator : Mediator {
 
 		//MessageCenter.SendMessage ("head","Sprite" );
 
-		MessageCenter.SendMessage ("player_id", "Heads");
+		MessageCenter.SendMsg ("player_id", "Heads");
 	}
 
 

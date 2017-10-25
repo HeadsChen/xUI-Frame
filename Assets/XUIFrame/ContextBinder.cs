@@ -38,7 +38,7 @@ namespace XUIF
             {"Award",typeof(AwardMediator) },
         };
 
-        public static Mediator Bind(Panel panel,string name)
+        public static Mediator Bind(View panel,string name)
         {
             if (!_dic.ContainsKey(name))
             {

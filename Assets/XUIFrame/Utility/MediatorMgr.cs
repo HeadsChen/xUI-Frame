@@ -94,8 +94,8 @@ namespace XUIF
                 Mediator m = null;
                 try
                 {
-                    Panel panel = panelGo.GetComponent<Panel>();
-                    panel.InitPanel();
+                    View panel = panelGo.GetComponent<View>();
+                    panel.InitView();
                     m = ContextBinder.Bind(panel, name);
                     m.OnRegister();
                     _mDic.Add(name, m);

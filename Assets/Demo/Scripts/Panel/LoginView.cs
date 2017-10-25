@@ -1,12 +1,12 @@
 ﻿/***
  *    Project:
- *		  ***
+ *		  xUI Frame
  *    Title: 
- *		  ***
+ *		  Login Panel
  *    Description: 
- *        ***
+ *        Demo Login
  *                  
- *    Date: 2017/10/21
+ *    Date: 2017/10/22
  *    Version: 0.1
  *    Modify Recoder: 
  *    
@@ -17,13 +17,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using XUIF;
 
-public class LoginPanel : Panel {
+public class LoginView : View {
 
     public Text loginTitle;
     public InputField acountInput;
     public GameObject loginBtn;
 
-    public override void InitPanel()
+    public override void InitView()
     {
         RegisterButton("login", loginBtn);
 

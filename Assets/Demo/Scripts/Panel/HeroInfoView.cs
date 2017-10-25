@@ -1,21 +1,34 @@
-﻿using UnityEngine;
+﻿/***
+ *    Project:
+ *		  xUI Frame
+ *    Title: 
+ *		  Hero Information Panel
+ *    Description: 
+ *        Demo Hero Information
+ *                  
+ *    Date: 2017/10/22
+ *    Version: 0.1
+ *    Modify Recoder: 
+ *    
+ *   
+ */
+
+using UnityEngine;
 using UnityEngine.UI;
 using XUIF;
 
-public class HeroInfoPanel : Panel {
+public class HeroInfoView : View {
 
 	public Image head;
 	public Text playerId;
 	public GameObject petInfoBtn;
 	public GameObject detailInfoBtn;
-	public GameObject backBtn;
 	public GameObject returnLogin;
 
-	public override void InitPanel ()
+	public override void InitView ()
 	{
 		RegisterButton ("pet_info", petInfoBtn);
 		RegisterButton ("detail_info", detailInfoBtn);
-		RegisterButton ("hero_info_close", backBtn);
 		RegisterButton ("Return_Login", returnLogin);
 
 		ReceiveMessage ("head", o => {

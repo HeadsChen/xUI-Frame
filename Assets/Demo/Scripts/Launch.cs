@@ -28,7 +28,7 @@ public class Launch : MonoBehaviour {
 
 	void OnGUI(){
 
-		GUI.Label (new Rect (400, 10, 600, 100), Singleton<UIManager>.Instance.Log ());
+        GUI.Label(new Rect(400, 10, 600, 100), Singleton<UIManager>.Instance.Log());
 
-	}
+    }
 }

@@ -19,7 +19,7 @@ using UnityEngine.UI;
 using XUIF;
 using System.Collections.Generic;
 
-public class MainPanel : Panel {
+public class MainView : View {
 
     public Image head;
     public Text gameId;
@@ -31,7 +31,7 @@ public class MainPanel : Panel {
     public GameObject setting;
     
 
-    public override void InitPanel()
+    public override void InitView()
     {
         RegisterButton("Player_Info", head.gameObject);
         RegisterButton("Email", email);

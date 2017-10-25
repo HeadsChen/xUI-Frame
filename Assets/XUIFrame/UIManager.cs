@@ -22,11 +22,11 @@ namespace XUIF
 	public class UIManager : Singleton<UIManager>
 	{      
         //维护UI树
-        TreeStack<Mediator> _UITree;
+        TreeStack<Mediator> _UITreeStack;
 
 		private UIManager()
 		{
-            CreateTree();
+            CreateTreeStack();
 
             OpenPanel("Login");
 		}
@@ -44,15 +44,15 @@ namespace XUIF
             Mediator m = GetMediator(name);
             if (m != null)
             {
-                if (_UITree.NotOnlyRoot)
+                if (_UITreeStack.NotOnlyRoot)
                 {
-                    Mediator[] freezeArr = _UITree.Peek();
+                    Mediator[] freezeArr = _UITreeStack.Peek();
                     for (int i = 0; i < freezeArr.Length; i++)
                     {
                         freezeArr[i].Freeze();
                     }
                 }
-                _UITree.Push(name, m);
+                _UITreeStack.Push(name, m);
                 m.Display();
             }
             return m != null;
@@ -64,13 +64,13 @@ namespace XUIF
         /// <param name="name">指定视图名</param>
 		public void Return2Panel(string name = null)
         {
-            Mediator[] hideArr = _UITree.Pull(name);
+            Mediator[] hideArr = _UITreeStack.Pull(name);
             for (int i = 0; i < hideArr.Length; i++)
             {
                 hideArr[i].Hide();
             }
 
-            Mediator[] reactArr = _UITree.Peek();
+            Mediator[] reactArr = _UITreeStack.Peek();
             for (int i = 0; i < reactArr.Length; i++)
             {
                 reactArr[i].Reactivate();
@@ -88,7 +88,7 @@ namespace XUIF
             Mediator m = GetMediator(name);
             if (m != null)
             {
-                _UITree.AddLeaf(name, m);
+                _UITreeStack.AddLeaf(name, m);
                 m.Display();
             }
             return m;
@@ -100,7 +100,7 @@ namespace XUIF
         /// <param name="panel"></param>
         public void CloseSubPanel(string panel)
         {
-            Mediator m = _UITree.RemoveLeaf(panel);
+            Mediator m = _UITreeStack.RemoveLeaf(panel);
             m.Hide();
         }
 
@@ -111,12 +111,12 @@ namespace XUIF
         /// <summary>
         /// 创建UI树
         /// </summary>
-        private void CreateTree()
+        private void CreateTreeStack()
         {
             Mediator m = GetMediator("Root");
             if (m != null)
             {
-                _UITree = new TreeStack<Mediator>("Root", m);
+                _UITreeStack = new TreeStack<Mediator>("Root", m);
                 return;
             }
             Debug.LogErrorFormat("UI TreeStack failed to create.Cause:could not find the mediator {0}", "Root");
@@ -137,7 +137,7 @@ namespace XUIF
 		#region 测试用
 		public string Log(){
 
-			return string.Format ("Current UI Tree contains:\n{0}\nCurrent panel is {1} ", _UITree.Traverse (_UITree.End), _UITree.End.Id);
+			return string.Format ("Current UI Tree contains:\n{0}\nCurrent panel is {1} ", _UITreeStack.Traverse (_UITreeStack.End), _UITreeStack.End.Id);
 		}
 		#endregion
 

@@ -2,9 +2,9 @@
  *    Project:
  *		  xUI Frame
  *    Title: 
- *		  Notice Panel
+ *		  Letter Panel
  *    Description: 
- *        Demo Notice
+ *        Demo letter
  *                  
  *    Date: 2017/10/22
  *    Version: 0.1
@@ -13,11 +13,10 @@
  *   
  */
 
-using UnityEngine;
-using UnityEngine.UI;
+
 using XUIF;
 
-public class NoticePanel : Panel {
+public class LetterView : View {
 
 	
 }

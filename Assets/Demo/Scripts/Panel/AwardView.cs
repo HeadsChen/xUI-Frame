@@ -17,7 +17,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using XUIF;
 
-public class AwardPanel : Panel {
+public class AwardView : View {
 
 	
 

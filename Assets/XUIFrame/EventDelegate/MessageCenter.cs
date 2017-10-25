@@ -20,140 +20,67 @@ namespace XUIF
 {
     public class MessageCenter
     {
-        //消息委托
-        public delegate void MessageDelegate(object o);
-        //图片精灵委托 用于发送图片参数
-        //public delegate void ImgDelegate(Sprite sprite);
-
-        //消息委托集
-        //<string:消息键，MessageDelegate:更新数据委托>
-        static Dictionary<string, MessageDelegate> _messagesDic = new Dictionary<string, MessageDelegate>();
-        //<string:消息键，ImgDelegate:更新数据委托>
-        //static Dictionary<string, ImgDelegate> _imgDic = new Dictionary<string, ImgDelegate>();
-
+        //数据模型集合
+        //数据类别键：上下文数据模型
+        static Dictionary<string, ContextModel> _modelDic = new Dictionary<string, ContextModel>();
 
         /// <summary>
-        /// 添加消息监听
+        /// 初始化数据模型键值对
         /// </summary>
-        /// <param name="msgKey">消息类型</param>
+        /// <param name="msgType">数据类别键</param>
+        /// <param name="o">数据初始值</param>
+        public static void InitKeyValue(string msgType,object o)
+        {
+            if (_modelDic.ContainsKey(msgType))
+            {
+                _modelDic[msgType].Value = o;
+                return;
+            }
+            ContextModel model = new ContextModel();
+            model.Value = o;
+            _modelDic.Add(msgType, model);
+        }
+
+        /// <summary>
+        /// 添加监听器
+        /// </summary>
+        /// <param name="msgType">数据类别键</param>
         /// <param name="delHandle">消息委托</param>
-        public static void AddMsgListener(string msgKey, MessageDelegate delHandle)
+        public static void AddListner(string msgType, ContextModel.MessageDelegate delHandle)
         {
-            if (!_messagesDic.ContainsKey(msgKey))
+            if (_modelDic.ContainsKey(msgType))
             {
-                _messagesDic.Add(msgKey, null);
+                _modelDic[msgType].AddListner(delHandle);
+                return;
             }
-            _messagesDic[msgKey] += delHandle;
+            ContextModel model = new ContextModel();
+            model.AddListner(delHandle);
+            _modelDic.Add(msgType, model);
         }
 
         /// <summary>
-        /// 移除指定消息监听
+        /// 移除监听器
         /// </summary>
-        /// <param name="msgKey">消息类型</param>
-        public static bool RemoveMsgListener(string msgKey)
+        /// <param name="msgType"></param>
+        public static void RemoveListner(string msgType)
         {
-            return _messagesDic.Remove(msgKey);
+            _modelDic.Remove(msgType);
         }
 
         /// <summary>
-        /// 发送消息
+        /// 发送消息 用于更新数据
         /// </summary>
-        /// <param name="msgKey">消息类型</param>
-        /// <param name="o">更新数据</param>
-        public static void SendMessage(string msgKey, object o)
+        /// <param name="msgType">数据类别键</param>
+        /// <param name="o">新数据</param>
+        public static void SendMsg(string msgType,object o)
         {
-            MessageDelegate del = _messagesDic.GetValue(msgKey);
-            if (del != null)
+            if (_modelDic.ContainsKey(msgType))
             {
-                del(o);
+                _modelDic[msgType].Value = o;
             }
-        }
-
-        //public static void AddImgListener(string imgType, ImgDelegate delHandle)
-        //{
-        //    if (!_imgDic.ContainsKey(imgType))
-        //    {
-        //        _imgDic.Add(imgType, null);
-        //    }
-        //    _imgDic[imgType] += delHandle;
-        //}
-
-
-        //public static bool RemoveImgListener(string imgType)
-        //{
-        //    return _imgDic.Remove(imgType);
-        //}
-
-
-        /// <summary>
-        /// 清空消息监听
-        /// </summary>
-        //public static void ClearMsgListener()
-        //{
-        //    if (_messagesDic != null)
-        //    {
-        //        _messagesDic.Clear();
-        //    }
-        //}
-
-        //public static void ClearImgListener()
-        //{
-        //    if (_imgDic != null)
-        //    {
-        //        _imgDic.Clear();
-        //    }
-        //}
-
-
-        //public static void SendImg(string imgType, Sprite sprite)
-        //{
-        //    ImgDelegate del = _imgDic.GetValue(imgType);
-        //    if (del != null)
-        //    {
-        //        del(sprite);
-        //    }
-        //}
-
-        /// <summary>
-        /// 更新模型
-        /// </summary>
-        class ModelUpdate
-        {
-            //数据
-            private object _value;
-            //更新数据委托
-            private MessageDelegate _del;
-
-
-            public object Value
-            {
-                get { return _value; }
-                set
-                {
-                    if (_value != value)
-                    {
-                        _value = value;
-                        _del(_value);
-                    }
-                }
-            }
-
-            public MessageDelegate Del
-            {
-                get { return _del; }
-                set
-                {
-                    _del += value;
-                }
-            }
-
-            public ModelUpdate(object o,MessageDelegate del)
-            {
-                _value = o;
-                _del = del;
-            }
-        }
+        }        
     }
+
 
 }
 
