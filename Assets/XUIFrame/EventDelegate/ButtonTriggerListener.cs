@@ -4,7 +4,7 @@
  *    Title: 
  *		  Event Listener
  *    Description: 
- *        GameObject binds event here
+ *        Button Event.
  *                  
  *    Date: 2017/10/14
  *    Version: 0.1
@@ -17,7 +17,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class EventTriggerListener : EventTrigger {
+public class ButtonTriggerListener : EventTrigger {
 
     //游戏物体作为监听对象
     public delegate void EventDelegate(GameObject go);
@@ -32,11 +32,11 @@ public class EventTriggerListener : EventTrigger {
     /// </summary>
     /// <param name="go">监听对象</param>
     /// <returns></returns>
-    public static EventTriggerListener GetListener(GameObject go)
+    public static ButtonTriggerListener GetListener(GameObject go)
     {
-        EventTriggerListener listen = go.GetComponent<EventTriggerListener>();
+        ButtonTriggerListener listen = go.GetComponent<ButtonTriggerListener>();
         if (listen == null)
-            listen = go.AddComponent<EventTriggerListener>();
+            listen = go.AddComponent<ButtonTriggerListener>();
         return listen;
     }
 

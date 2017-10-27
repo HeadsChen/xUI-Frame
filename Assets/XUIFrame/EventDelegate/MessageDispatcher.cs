@@ -18,11 +18,15 @@ using System.Collections.Generic;
 
 namespace XUIF
 {
-    public class MessageCenter
+    public class MessageDispatcher
     {
         //数据模型集合
         //数据类别键：上下文数据模型
         static Dictionary<string, ContextModel> _modelDic = new Dictionary<string, ContextModel>();
+
+        //接收器集合
+        //接收器名：接收器
+        static Dictionary<string, IReceive> _receiveDic = new Dictionary<string, IReceive>();
 
         /// <summary>
         /// 初始化数据模型键值对
@@ -78,7 +82,26 @@ namespace XUIF
             {
                 _modelDic[msgType].Value = o;
             }
-        }        
+        }
+
+
+        public static void AddReceiver(string msgType,IReceive rec)
+        {
+            _receiveDic[msgType] = rec;
+        }
+
+        public static void RemoveReceive(string msgType)
+        {
+            _receiveDic.Remove(msgType);
+        }
+
+        public static void SendMsg(string msgType)
+        {
+            if (_receiveDic.ContainsKey(msgType))
+            {
+                _receiveDic[msgType].OnReceive();
+            }
+        }
     }
 
 

@@ -72,9 +72,9 @@ namespace XUIF
 		/// </summary>
 		/// <param name="eventName">事件名</param>
 		/// <param name="clickHandle">点击事件委托</param>
-		protected void BindClickEvent (string eventName, EventTriggerListener.EventDelegate clickHandle)
+		protected void BindClickEvent (string eventName, ButtonTriggerListener.EventDelegate clickHandle)
 		{
-			bool bound = EventDispatcher.BindClickEvent (eventName, clickHandle);
+			bool bound = ButtonBinder.BindClickEvent (eventName, clickHandle);
 			if (!bound) {
 				Debug.LogFormat ("Event {0} failed to bind.", eventName);
 			}

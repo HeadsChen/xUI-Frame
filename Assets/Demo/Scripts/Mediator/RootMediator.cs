@@ -20,7 +20,7 @@ public class RootMediator : Mediator {
 
     public override void OnRegister()
     {
-        MessageCenter.SendMsg("Mask", new Color(0, 0, 0, 0));
+        MessageDispatcher.SendMsg("Mask", new Color(0, 0, 0, 0));
         gameObject.SetActive(false);
     }
 

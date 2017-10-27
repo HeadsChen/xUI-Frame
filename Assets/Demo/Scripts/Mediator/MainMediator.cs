@@ -31,9 +31,9 @@ public class MainMediator : Mediator {
             OpenPanel("Email");
         });
 
-        MessageCenter.SendMsg("player_id", "Heads");
+        MessageDispatcher.SendMsg("player_id", "Heads");
 
-        MessageCenter.SendMsg("head", LoadImg("head"));
+        MessageDispatcher.SendMsg("head", LoadImg("head"));
     }
 
     private Sprite LoadImg(string imgName)

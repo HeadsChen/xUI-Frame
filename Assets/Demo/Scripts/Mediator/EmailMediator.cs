@@ -37,11 +37,20 @@ public class EmailMediator : Mediator {
 
         BindClickEvent("Get_All", go =>
         {
-            MessageCenter.SendMsg("bottom_notice", "All Email have been read.");
+            MessageDispatcher.SendMsg("bottom_notice", "All Email have been read.");
         });
 
+        BindClickEvent("Add_Email", go =>
+        {
+            //if (_currentBox == null)
+            //    return;
+            MessageDispatcher.SendMsg("Notice");
+        });
+        
         InitEmail();
     }
+
+    Transform _currentBox;
     
     public override void Display()
     {
@@ -62,6 +71,7 @@ public class EmailMediator : Mediator {
     private void SelectLabel(GameObject go)
     {
         go.transform.SetAsLastSibling();
+        _currentBox = go.transform.GetChild(go.transform.childCount - 1).GetChild(0);
         //string name = go.name;
         //Transform subPanel = panel.FindChild(name);
         //if (subPanel != null)
@@ -78,7 +88,20 @@ public class EmailMediator : Mediator {
     /// </summary>
     private void InitEmail()
     {
+        ReceiverBinder.BindReceiveEvent("Notice", tran =>
+        {
+            Debug.LogFormat("{0} box receive a Email.",tran.name);
+        });
 
+        ReceiverBinder.BindReceiveEvent("Notice", tran =>
+        {
+            Debug.LogFormat("{0} box receive a Email.", tran.name);
+        });
+
+        ReceiverBinder.BindReceiveEvent("Notice", tran =>
+        {
+            Debug.LogFormat("{0} box receive a Email.", tran.name);
+        });
     }
 
 

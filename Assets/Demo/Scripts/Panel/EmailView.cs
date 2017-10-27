@@ -23,7 +23,11 @@ public class EmailView : View {
     public GameObject letterLabel;
     public GameObject awardLabel;
     public GameObject getAll;
-    //public GameObject close;
+    public GameObject AddEmail;
+
+    public Transform noticeBox;
+    public Transform letterBox;
+    public Transform awardBox;
 
     public Text bottomNotice;
 
@@ -33,7 +37,12 @@ public class EmailView : View {
         RegisterButton("Letter", letterLabel);
         RegisterButton("Award", awardLabel);
         RegisterButton("Get_All", getAll);
-        //RegisterButton("Close_Email", close);
+        RegisterButton("Add_Email", AddEmail);
+
+        ReceiverBinder.BindReceiver("Notice", noticeBox);
+        ReceiverBinder.BindReceiver("Letter", letterBox);
+        ReceiverBinder.BindReceiver("Award", awardBox);
+
 
         ReceiveMessage("bottom_notice", o =>
         {

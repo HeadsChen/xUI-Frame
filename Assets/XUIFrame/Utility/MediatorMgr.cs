@@ -96,7 +96,7 @@ namespace XUIF
                 {
                     View panel = panelGo.GetComponent<View>();
                     panel.InitView();
-                    m = ContextBinder.Bind(panel, name);
+                    m = MediationBinder.Bind(panel, name);
                     m.OnRegister();
                     _mDic.Add(name, m);
                 }

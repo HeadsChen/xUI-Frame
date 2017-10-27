@@ -19,15 +19,21 @@ using System.Collections.Generic;
 public static class Extension {
 
     /// <summary>
-	/// this Dictionary<Tkey,Tvalue> dict 表示要获取值的字典
-	/// </summary>
+    /// 取值。存在返回对应值，不存在或字典未定义时返回默认值。
+    /// </summary>
 	public static Tvalue GetValue<Tkey, Tvalue>(this Dictionary<Tkey, Tvalue> dict, Tkey key)
-    {        
-        Tvalue value;
-        dict.TryGetValue(key, out value);
+    {
+        Tvalue value = default(Tvalue);
+        if (dict != null)
+        {
+            dict.TryGetValue(key, out value);
+        }
         return value;
     }
 
+    /// <summary>
+    /// 是否包含键。未定义时不报错。
+    /// </summary>
 	public static bool includeKey<Tkey,Tvalue>(this Dictionary<Tkey,Tvalue> dict,Tkey key){
 		if (dict != null) {
 			return dict.ContainsKey (key);
@@ -35,6 +41,9 @@ public static class Extension {
 		return false;
 	}
 
+    /// <summary>
+    /// 地点键值对数。未定义时不报错
+    /// </summary>
 	public static int GetCount<Tkey,Tvalue>(this Dictionary<Tkey,Tvalue> dict){
 		if (dict != null) {
 			return dict.Count;
@@ -42,14 +51,22 @@ public static class Extension {
 		return 0;
 	}
 
-	public static void DestroyChildren(this Transform trans)
+    /// <summary>
+    /// 清除子物体对象
+    /// </summary>
+	public static void ClearChildren(this Transform trans)
 	{
+        if (trans.childCount == 0)
+            return;
 		foreach (Transform child in trans)
 		{
 			GameObject.Destroy(child.gameObject);
 		}
 	}
 
+    /// <summary>
+    /// 将预设体添加为子物体对象
+    /// </summary>
 	public static Transform AddChildFromPrefab(this Transform trans, Transform prefab, string name = null)
 	{
 		Transform childTrans = GameObject.Instantiate(prefab) as Transform;

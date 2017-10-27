@@ -174,7 +174,7 @@ namespace MoleMole
             _showIndexSet.Clear();
             if (_grid != null)
             {
-                _grid.GetComponent<RectTransform>().DestroyChildren();
+                _grid.GetComponent<RectTransform>().ClearChildren();
             }
         }
 

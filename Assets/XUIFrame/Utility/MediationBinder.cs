@@ -22,7 +22,7 @@ namespace XUIF
     /// UI环境绑定
     /// 注入调度器
     /// </summary>
-    class ContextBinder 
+    class MediationBinder 
     {
         static Dictionary<string, System.Type> _dic = new Dictionary<string, System.Type> {
 			//添加（面板名：中转器类型）键值对，如：

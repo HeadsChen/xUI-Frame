@@ -53,7 +53,7 @@ namespace XUIF
         {
             OnValueChanged += onChanged;
             if (_value != null)
-                OnValueChanged(_value);
+                onChanged(_value);
         }
     }
 }

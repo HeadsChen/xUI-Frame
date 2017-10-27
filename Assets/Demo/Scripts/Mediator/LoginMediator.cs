@@ -28,7 +28,7 @@ public class LoginMediator : Mediator {
             OpenPanel("Main");
         });
 
-        MessageCenter.SendMsg("login_title", GetText("login_title"));
+        MessageDispatcher.SendMsg("login_title", GetText("login_title"));
     }
 
     string GetText(string strId)

@@ -13,13 +13,14 @@
  *   
  */
 
+using System;
 using UnityEngine;
 
 namespace XUIF
 {
     public class View : MonoBehaviour
     {
-
+       
         /// <summary>
         /// 初始化视图面板，将隶属该视图的UI控件注册到事件派发器或消息中心
         /// </summary>
@@ -35,7 +36,7 @@ namespace XUIF
         /// <param name="go">注册对象</param>
         protected void RegisterButton(string eventName, GameObject go)
         {
-            EventDispatcher.BindButton(eventName, go);
+            ButtonBinder.BindButton(eventName, go);
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace XUIF
         /// <param name="msgDelegate">消息委托</param>
         protected void ReceiveMessage(string msgType, ContextModel.MessageDelegate msgDelegate)
         {
-            MessageCenter.AddListner(msgType, msgDelegate);
+            MessageDispatcher.AddListner(msgType, msgDelegate);
         }
     }
 }

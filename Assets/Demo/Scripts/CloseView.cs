@@ -28,7 +28,7 @@ public class CloseView : MonoBehaviour {
 
         viewName = transform.parent.name;
 
-        EventTriggerListener listen = EventTriggerListener.GetListener(gameObject);
+        ButtonTriggerListener listen = ButtonTriggerListener.GetListener(gameObject);
         listen.onClick = go =>
         {
             if (isSubPanel)

@@ -36,7 +36,7 @@ public class HeroInfoMediator : Mediator {
 
 		//MessageCenter.SendMessage ("head","Sprite" );
 
-		MessageCenter.SendMsg ("player_id", "Heads");
+		MessageDispatcher.SendMsg ("player_id", "Heads");
 	}
 
 
