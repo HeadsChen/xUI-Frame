@@ -4,7 +4,7 @@
  *    Title: 
  *		  Email Panel
  *    Description: 
- *        Demo email panel
+ *        Demo email box panel
  *                  
  *    Date: 2017/10/22
  *    Version: 0.1
@@ -17,7 +17,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using XUIF;
 
-public class EmailView : View {
+public class EmailBoxView : View {
     
     public GameObject noticeLabel;
     public GameObject letterLabel;
@@ -33,11 +33,11 @@ public class EmailView : View {
 
     public override void InitView()
     {
-        RegisterButton("Notice", noticeLabel);
-        RegisterButton("Letter", letterLabel);
-        RegisterButton("Award", awardLabel);
-        RegisterButton("Get_All", getAll);
-        RegisterButton("Add_Email", AddEmail);
+        BindButton("Notice", noticeLabel);
+        BindButton("Letter", letterLabel);
+        BindButton("Award", awardLabel);
+        BindButton("Get_All", getAll);
+        BindButton("Add_Email", AddEmail);
 
         ReceiverBinder.BindReceiver("Notice", noticeBox);
         ReceiverBinder.BindReceiver("Letter", letterBox);

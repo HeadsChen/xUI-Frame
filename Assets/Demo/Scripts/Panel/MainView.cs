@@ -33,13 +33,13 @@ public class MainView : View {
 
     public override void InitView()
     {
-        RegisterButton("Player_Info", head.gameObject);
-        RegisterButton("Email", email);
-        RegisterButton("Guide", guide);
-        RegisterButton("Menu", menu);
-        RegisterButton("Shop",shop);
-        RegisterButton("Friend", friend);
-        RegisterButton("Setting", setting);
+        BindButton("Player_Info", head.gameObject);
+        BindButton("Email", email);
+        BindButton("Guide", guide);
+        BindButton("Menu", menu);
+        BindButton("Shop",shop);
+        BindButton("Friend", friend);
+        BindButton("Setting", setting);
 
         ReceiveMessage("player_id", o => gameId.text = o.ToString());
 

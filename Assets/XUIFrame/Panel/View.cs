@@ -34,7 +34,7 @@ namespace XUIF
         /// </summary>
         /// <param name="eventName">事件名</param>
         /// <param name="go">注册对象</param>
-        protected void RegisterButton(string eventName, GameObject go)
+        protected void BindButton(string eventName, GameObject go)
         {
             ButtonBinder.BindButton(eventName, go);
         }

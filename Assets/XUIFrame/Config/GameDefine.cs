@@ -2,11 +2,11 @@
  *    Project:
  *		  xUI Frame
  *    Title: 
- *		  Notice Mediator
+ *		  Game Define
  *    Description: 
- *        Demo notice
+ *        Demo define static value.
  *                  
- *    Date: 2017/10/22
+ *    Date: 2017
  *    Version: 0.1
  *    Modify Recoder: 
  *    
@@ -14,9 +14,10 @@
  */
 
 using UnityEngine;
-using XUIF;
+using System.Collections;
 
-public class NoticeMediator : Mediator {
+public class GameDefine {
 
+    public static int emailId = 0;
 	
 }

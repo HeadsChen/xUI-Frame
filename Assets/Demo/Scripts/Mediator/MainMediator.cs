@@ -28,7 +28,7 @@ public class MainMediator : Mediator {
 
         BindClickEvent("Email", go =>
         {
-            OpenPanel("Email");
+            OpenPanel("EmailBox");
         });
 
         MessageDispatcher.SendMsg("player_id", "Heads");

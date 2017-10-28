@@ -36,7 +36,7 @@ public class ResLoader :Singleton<ResLoader> {
         T TRes = Resources.Load<T>(path);
         if (TRes == null)
         {
-            Debug.LogErrorFormat("{0} 目标资源无法加载，检查：Resouces/" + path);
+            Debug.LogError("目标资源无法加载，检查：Resouces/" + path);
         }else if (cache)
         {
             _resCache.Add(path, TRes);

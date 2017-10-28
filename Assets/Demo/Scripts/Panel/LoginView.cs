@@ -25,7 +25,7 @@ public class LoginView : View {
 
     public override void InitView()
     {
-        RegisterButton("login", loginBtn);
+        BindButton("login", loginBtn);
 
         ReceiveMessage("login_title", o =>
         {

@@ -41,16 +41,16 @@ namespace XUIF
         /// <param name="eventName"></param>
         /// <param name="receiveDelegate"></param>
         /// <returns></returns>
-        public static bool BindReceiveEvent(string eventName, Receiver.ReceiveDelegate receiveDelegate)
+        public static Transform BindReceiveEvent(string eventName, Receiver.ReceiveDelegate receiveDelegate)
         {
             Receiver listener = _receiverDic.GetValue(eventName);
             if (listener != null)
             {
                 listener.onReceive = receiveDelegate;
                 MessageDispatcher.AddReceiver(eventName, listener);
-                return true;
+                return listener.transform;
             }
-            return false;
+            return null;
         }
     }
 }

@@ -27,15 +27,13 @@ namespace XUIF
         static Dictionary<string, System.Type> _dic = new Dictionary<string, System.Type> {
 			//添加（面板名：中转器类型）键值对，如：
 			{ "Main",typeof(MainMediator) },
-			{ "Root",typeof(RootMediator) },
-			{ "Login",typeof(LoginMediator) },
-			{ "HeroInfo",typeof(HeroInfoMediator) },
-			{ "PetInfo",typeof(PetInfoMediator) },
-			{ "DetailInfo",typeof(DetailInfoMediator) },
+            { "Root",typeof(RootMediator) },
+            { "Login",typeof(LoginMediator) },
+            { "HeroInfo",typeof(HeroInfoMediator) },
+            { "PetInfo",typeof(PetInfoMediator) },
+            { "DetailInfo",typeof(DetailInfoMediator) },
+            {"EmailBox",typeof(EmailBoxMediator) },
             {"Email",typeof(EmailMediator) },
-            {"Notice",typeof(NoticeMediator) },
-            {"Letter",typeof(LetterMediator) },
-            {"Award",typeof(AwardMediator) },
         };
 
         public static Mediator Bind(View panel,string name)

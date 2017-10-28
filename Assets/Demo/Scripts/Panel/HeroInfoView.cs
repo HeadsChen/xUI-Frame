@@ -27,9 +27,9 @@ public class HeroInfoView : View {
 
 	public override void InitView ()
 	{
-		RegisterButton ("pet_info", petInfoBtn);
-		RegisterButton ("detail_info", detailInfoBtn);
-		RegisterButton ("Return_Login", returnLogin);
+		BindButton ("pet_info", petInfoBtn);
+		BindButton ("detail_info", detailInfoBtn);
+		BindButton ("Return_Login", returnLogin);
 
 		ReceiveMessage ("head", o => {
             //head.sprite = Resources.Load<Sprite>(o.ToString());

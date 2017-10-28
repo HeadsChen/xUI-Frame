@@ -148,17 +148,11 @@ namespace XUIF
                     "DetailInfo","UIPanel/DetailInfoPanel"
                 },
                 {
+                    "EmailBox","UIPanel/EmailBoxPanel"
+                },
+                {
                     "Email","UIPanel/EmailPanel"
-                },
-                {
-                    "Award","UIPanel/AwardPanel"
-                },
-                {
-                    "Letter","UIPanel/LetterPanel"
-                },
-                {
-                    "Notice","UIPanel/NoticePanel"
-                },
+                }
             };
         }
 
