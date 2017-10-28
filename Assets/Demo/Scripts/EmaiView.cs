@@ -1,4 +1,5 @@
-﻿/***
+﻿
+/***
  *    Project:
  *		  xUI Frame
  *    Title: 
@@ -17,7 +18,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using XUIF;
 
-public class EmaiView : MonoBehaviour {
+public interface IGetEmail{
+	void GetEmail();
+}
+
+public class EmaiView : MonoBehaviour,IGetEmail {
 
     public Image senderHead;
     public Image AttachImg;
@@ -27,14 +32,12 @@ public class EmaiView : MonoBehaviour {
     public Text timer;
     public GameObject getBtn;
 
-    private void Awake()
+    private void Start()
     {
-        ButtonBinder.BindButton("Get_Email", getBtn);
-        ButtonBinder.BindClickEvent("Gat_Email", go =>
-        {
-            Debug.LogFormat("Get a email:{0}", go.transform.GetChild(1).GetComponent<Text>().text);
-            Destroy(go.transform.parent);
-        });
+		ButtonTriggerListener listen = ButtonTriggerListener.GetListener (getBtn);
+		listen.onClick = go => {
+			GetEmail();
+		};
 
         MessageDispatcher.AddListner(transform.name, o =>
         {
@@ -46,6 +49,11 @@ public class EmaiView : MonoBehaviour {
             state.text = email.state;
             timer.text = email.Timer;
         });
-        
     }
+
+	public void GetEmail(){
+		Debug.LogFormat ("Get a email:{0}", gameObject.transform.GetChild (1).GetComponent<Text> ().text);
+		Destroy (gameObject);
+	}
+
 }

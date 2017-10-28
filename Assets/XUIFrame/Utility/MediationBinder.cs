@@ -33,7 +33,6 @@ namespace XUIF
             { "PetInfo",typeof(PetInfoMediator) },
             { "DetailInfo",typeof(DetailInfoMediator) },
             {"EmailBox",typeof(EmailBoxMediator) },
-            {"Email",typeof(EmailMediator) },
         };
 
         public static Mediator Bind(View panel,string name)

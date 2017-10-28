@@ -1,0 +1,33 @@
+﻿{
+    "KeyValuePairs": 
+	[
+        {
+            "Key": "Root",
+            "Value": "UIPanel\\RootPanel"
+        },
+        {
+            "Key": "Login",
+            "Value": "UIPanel\\LoginPanel"
+        },
+        {
+            "Key": "Main",
+            "Value": "UIPanel\\MainPanel"
+        },
+        {
+            "Key": "HeroInfo",
+            "Value": "UIPanel\\HeroInfoPanel"
+        },
+        {
+            "Key": "PetInfo",
+            "Value": "UIPanel\\PetInfoPanel"
+        },
+        {
+            "Key": "DetailInfo",
+            "Value": "UIPanel\\DetailInfoPanel"
+        },
+        {
+            "Key": "EmailBox",
+            "Value": "UIPanel\\EmailBoxPanel"
+        }
+    ]
+}
