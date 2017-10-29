@@ -100,7 +100,7 @@ public class EmailBoxMediator : Mediator
 			emailData.state = "剩余时间";
 			emailData.Timer = Random.Range (20, 30).ToString ();
 
-			MessageDispatcher.InitKeyValue (email.name, emailData);
+			MessageDispatcher.RegisterModel (email.name, emailData);
 		});
 		if (box != null) {
 			_emailBoxList.Add (box);

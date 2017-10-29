@@ -33,7 +33,7 @@ namespace XUIF
         /// </summary>
         /// <param name="msgType">数据类别键</param>
         /// <param name="o">数据初始值</param>
-        public static void InitKeyValue(string msgType,object o)
+        public static void RegisterModel(string msgType,object o)
         {
             if (_modelDic.ContainsKey(msgType))
             {
