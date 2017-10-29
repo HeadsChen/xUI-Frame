@@ -3,11 +3,11 @@ A simple UI Framework with Unity3d
 
 ***使用方式
 
-![加载失败](https://github.com/HeadsChen/xUI-Frame/raw/master/README/xUI框架.png)
-
 可通过打开Demo中main场景体验。
 
 ***框架核心 Mediator-ContextModel-View
+
+![加载失败](https://github.com/HeadsChen/xUI-Frame/raw/master/README/xUI框架.png)
 
 View负责自身显示，Mediator负责交互逻辑，从而使显示与逻辑分离。
 
