@@ -2,7 +2,7 @@
  *    Project:
  *		  xUI Frame
  *    Title: 
- *		  ***
+ *		  Mediator Binder
  *    Description: 
  *        ***
  *                  
