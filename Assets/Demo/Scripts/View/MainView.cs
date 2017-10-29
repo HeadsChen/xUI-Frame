@@ -22,14 +22,14 @@ using System.Collections.Generic;
 public class MainView : View {
 
     public Image head;
-    public Text gameId;
     public GameObject email;
     public GameObject guide;
 	public GameObject menu;
     public GameObject shop;
     public GameObject friend;
     public GameObject setting;
-    
+
+    public Text playerId;
 
     public override void InitView()
     {
@@ -41,12 +41,11 @@ public class MainView : View {
         BindButton("Friend", friend);
         BindButton("Setting", setting);
 
-        ReceiveMessage("player_id", o => gameId.text = o.ToString());
-
-        //TODO
+        ReceiveMessage("player_id", o => playerId.text = o.ToString());
+        
         //更换头像
         ReceiveMessage("head", o => {
             head.sprite = (Sprite)o;
-        });
+        });        
     }
 }

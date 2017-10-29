@@ -1,0 +1,77 @@
+﻿{
+    "ConfigInfoList": 
+	[
+        {
+            "Key": "Hello",
+            "Value": "Hello xUI"
+        },
+        {
+            "Key": "LoginBtn",
+            "Value": "Sign In"
+        },
+        {
+            "Key": "EmailBtn",
+            "Value": "Email"
+        },
+        {
+            "Key": "GuideBtn",
+            "Value": "Guide"
+        },
+        {
+            "Key": "SettingBtn",
+            "Value": "Setting"
+        },
+        {
+            "Key": "FriendBtn",
+            "Value": "Friend"
+        },
+        {
+            "Key": "ShopBtn",
+            "Value": "Shop"
+        },
+        {
+            "Key": "MenuBtn",
+            "Value": "Menu"
+        },
+        {
+            "Key": "ReturnLoginBtn",
+            "Value": "ReturnLogin"
+        },
+        {
+            "Key": "DetailInfoBtn",
+            "Value": "DetailInfo"
+        },
+        {
+            "Key": "PetInfo",
+            "Value": "Pet"
+        },
+        {
+            "Key": "BackBtn",
+            "Value": "Back"
+        },
+        {
+            "Key": "Email_Title",
+            "Value": "Email"
+        },
+        {
+            "Key": "Email_NoticeLabel",
+            "Value": "Notice"
+        },
+        {
+            "Key": "Email_LetterLabel",
+            "Value": "Letter"
+        },
+        {
+            "Key": "Email_AwardLabel",
+            "Value": "Award"
+        },
+        {
+            "Key": "Email_GetAllBtn",
+            "Value": "GetAll"
+        },
+        {
+            "Key": "Email_AddEmail",
+            "Value": "AddEmail"
+        }
+    ]
+}

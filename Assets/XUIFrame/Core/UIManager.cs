@@ -28,7 +28,7 @@ namespace XUIF
 		{
             CreateTreeStack();
 
-            OpenPanel("Login");
+            OpenPanel(ViewDefine.LOGIN);
 		}
 
         #region 对外接口。打开、关闭面板方式各两种
@@ -113,7 +113,7 @@ namespace XUIF
         /// </summary>
         private void CreateTreeStack()
         {
-            Mediator m = GetMediator("Root");
+            Mediator m = GetMediator(ViewDefine.ROOT);
             if (m != null)
             {
                 _UITreeStack = new TreeStack<Mediator>("Root", m);

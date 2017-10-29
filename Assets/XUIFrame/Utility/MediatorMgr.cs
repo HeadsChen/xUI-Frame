@@ -124,7 +124,7 @@ namespace XUIF
 		/// </summary>
 		void InitPathDic ()
 		{
-			IConfig config = new ConfigFromJson ("Config/UIPanelConfig");
+			IConfig config = new ConfigFromJson ("Config/UI/UIPanelConfig");
 			if (config != null) {
 				_pathDic = config.Config;
 			}

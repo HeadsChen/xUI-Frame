@@ -42,11 +42,10 @@ public class EmailBoxView : View {
         ReceiverBinder.BindReceiver("Notice", noticeBox);
         ReceiverBinder.BindReceiver("Letter", letterBox);
         ReceiverBinder.BindReceiver("Award", awardBox);
-
-
+        
         ReceiveMessage("bottom_notice", o =>
         {
             bottomNotice.text = o.ToString();
-        });
+        });        
     }
 }

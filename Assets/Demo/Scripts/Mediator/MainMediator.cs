@@ -23,12 +23,12 @@ public class MainMediator : Mediator {
     public override void OnRegister()
     {
 		BindClickEvent ("Player_Info", go => {
-			OpenPanel ("HeroInfo");
+            OpenPanel(ViewDefine.HEROINFO);
 		});
 
         BindClickEvent("Email", go =>
         {
-            OpenPanel("EmailBox");
+            OpenPanel(ViewDefine.EMAILBOX);
         });
 
         MessageDispatcher.SendMsg("player_id", "Heads");
@@ -41,4 +41,8 @@ public class MainMediator : Mediator {
         return Resources.Load<Sprite>("Sprite/" + imgName);
     }
     
+    private string GetText(string id)
+    {
+        return Singleton<LanguageMgr>.Instance.GetText(id);
+    }
 }

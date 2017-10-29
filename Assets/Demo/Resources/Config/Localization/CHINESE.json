@@ -1,0 +1,77 @@
+﻿{
+    "ConfigInfoList": 
+	[
+        {
+            "Key": "Hello",
+            "Value": "你好 xUI"
+        },
+        {
+            "Key": "LoginBtn",
+            "Value": "登录"
+        },
+        {
+            "Key": "EmailBtn",
+            "Value": "邮箱"
+        },
+        {
+            "Key": "GuideBtn",
+            "Value": "指南"
+        },
+        {
+            "Key": "SettingBtn",
+            "Value": "设置"
+        },
+        {
+            "Key": "FriendBtn",
+            "Value": "好友"
+        },
+        {
+            "Key": "ShopBtn",
+            "Value": "商店"
+        },
+        {
+            "Key": "MenuBtn",
+            "Value": "菜单"
+        },
+        {
+            "Key": "ReturnLoginBtn",
+            "Value": "返回登录"
+        },
+        {
+            "Key": "DetailInfoBtn",
+            "Value": "详情"
+        },
+        {
+            "Key": "PetInfo",
+            "Value": "宠物"
+        },
+        {
+            "Key": "BackBtn",
+            "Value": "返回"
+        },
+        {
+            "Key": "Email_Title",
+            "Value": "邮箱"
+        },
+        {
+            "Key": "Email_NoticeLabel",
+            "Value": "公告"
+        },
+        {
+            "Key": "Email_LetterLabel",
+            "Value": "私信"
+        },
+        {
+            "Key": "Email_AwardLabel",
+            "Value": "奖励"
+        },
+        {
+            "Key": "Email_GetAllBtn",
+            "Value": "获取全部"
+        },
+        {
+            "Key": "Email_AddEmail",
+            "Value": "添加邮件"
+        }
+    ]
+}

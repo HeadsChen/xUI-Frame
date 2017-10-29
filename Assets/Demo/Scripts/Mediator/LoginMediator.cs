@@ -25,17 +25,17 @@ public class LoginMediator : Mediator {
             //TODO
             //连接服务器校验密码，登录等
 
-            OpenPanel("Main");
+            OpenPanel(ViewDefine.MAIN);
         });
 
-        MessageDispatcher.SendMsg("login_title", GetText("login_title"));
+        MessageDispatcher.SendMsg("login_title", GetText("Hello"));
     }
 
     string GetText(string strId)
     {
         //从文本配置表获取
 
-        return "Hello xUI";
+        return Singleton<LanguageMgr>.Instance.GetText(strId);
     }
 
     public override void Freeze()
