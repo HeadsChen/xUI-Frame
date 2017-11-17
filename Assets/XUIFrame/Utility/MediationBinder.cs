@@ -32,14 +32,15 @@ namespace XUIF
             { "HeroInfo",typeof(HeroInfoMediator) },
             { "PetInfo",typeof(PetInfoMediator) },
             { "DetailInfo",typeof(DetailInfoMediator) },
-            {"EmailBox",typeof(EmailBoxMediator) },
+			{"EmailBox",typeof(EmailBoxMediator) },
+			{"Setting",typeof(SettingMediator) },
         };
 
         public static Mediator Bind(View panel,string name)
         {
             if (!_dic.ContainsKey(name))
             {
-                Debug.LogErrorFormat("{0} panel faid to bind mediator.Cause Mediator Dictionary does not contains {1}", name, name);
+				Debug.LogErrorFormat("{0} panel faid to bind mediator.Cause Mediator Dictionary does not contains the type of {1}Mediator.Please check the MediationBinder", name, name);
                 return null;
             }
 

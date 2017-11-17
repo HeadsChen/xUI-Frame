@@ -43,5 +43,7 @@ public class ResLoader :Singleton<ResLoader> {
         }
         return TRes;
     }
-	
+
+	//其他加载方式
+	//异步、AB、www加载
 }

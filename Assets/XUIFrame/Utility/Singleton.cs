@@ -11,7 +11,7 @@ public class Singleton<T>
 		get{
 			if(_instance==null)
 			{
-				_instance = (T)Activator.CreateInstance(typeof(T), true);
+				Create ();
 			}
 			return _instance;
 		}

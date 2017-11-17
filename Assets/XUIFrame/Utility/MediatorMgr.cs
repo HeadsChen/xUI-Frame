@@ -18,29 +18,32 @@ using System.Collections.Generic;
 
 namespace XUIF
 {
-	public class MediatorMgr
+	public class MediatorMgr:Singleton<MediatorMgr>
 	{
 		//维护UI调度器
 		//面板名:对应调度器
 		Dictionary<string, Mediator> _mDic;
 
-		//保存UI预设路径
-		//用于获取时加载
-		//面板名:相对 Resouces 路径
-		Dictionary<string, string> _pathDic;
-
 		private Transform _canvas;
+		private Transform Canvas{
+			get{
+				if (_canvas == null) {
+					_canvas = GameObject.Find ("Canvas").transform;
+				}
+				return _canvas;
+			}
+		}
+
+
 
 		private MediatorMgr ()
 		{
-			_canvas = GameObject.FindGameObjectWithTag ("UICanvas").transform;
-			if (_canvas.childCount != 0) {
-				foreach (Transform item in _canvas) {
+			if (Canvas.childCount != 0) {
+				foreach (Transform item in Canvas) {
 					GameObject.Destroy (item.gameObject);
 				}
 			}
 			_mDic = new Dictionary<string, Mediator> ();
-			InitPathDic ();
 		}
 
 		#region 对外接口 获取/移除（将删除游戏物体） 调度器
@@ -70,6 +73,14 @@ namespace XUIF
 			}
 		}
 
+
+		public void ClearMediator(){
+			foreach (var m in _mDic.Values) {
+				GameObject.Destroy (m.gameObject);
+			}
+			_mDic.Clear ();
+		}
+
 		#endregion
 
 		#region 私有方法
@@ -83,7 +94,7 @@ namespace XUIF
 			GameObject go = LoadPanel (name);
 			if (go != null) {
 				GameObject panelGo = GameObject.Instantiate (go);
-				panelGo.transform.SetParent (_canvas, false);
+				panelGo.transform.SetParent (Canvas, false);
 				panelGo.name = name;
 
 				Mediator m = null;
@@ -91,11 +102,13 @@ namespace XUIF
 					View panel = panelGo.GetComponent<View> ();
 					panel.InitView ();
 					m = MediationBinder.Bind (panel, name);
-					m.OnRegister ();
-					_mDic.Add (name, m);
+					if (m != null) {
+						m.OnRegister ();
+						_mDic.AddKeyValue (name, m);
+					}
 				} catch (System.Exception e) {
-					GameObject.Destroy (panelGo);
-					Debug.LogErrorFormat ("Mediator not set to {0} Panel.Cause:{1}", name, e.Message);
+//					GameObject.Destroy (panelGo);
+					Debug.LogErrorFormat ("{0} Mediator can not set to {0} Panel.Cause:{1}", name, e.Message);
 				}
 				return;
 			}
@@ -111,27 +124,12 @@ namespace XUIF
 		/// <returns></returns>
 		private GameObject LoadPanel (string name)
 		{
-			string path = _pathDic.GetValue (name);
-			if (string.IsNullOrEmpty (path)) {
-				Debug.LogWarningFormat ("{0} is not exist in Config.Please check {1}.", name, "UIPanelConfig");
-				return null;
-			}
+			string path = PathDefine.PANEL + name + "Panel";
+
 			return ResLoader.Instance.LoadResFromResFile<GameObject> (path, false);
 		}
 
-		/// <summary>
-		/// 初始化配置文件
-		/// </summary>
-		void InitPathDic ()
-		{
-			IConfig config = new ConfigFromJson ("Config/UI/UIPanelConfig");
-			if (config != null) {
-				_pathDic = config.Config;
-			}
-		}
-
 		#endregion
-
 	}
 }
 

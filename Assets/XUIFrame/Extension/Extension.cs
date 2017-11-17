@@ -18,6 +18,19 @@ using System.Collections.Generic;
 
 public static class Extension {
 
+	/// <summary>
+	/// 存在键时替换值，否则添加键值。
+	/// </summary>
+	public static void AddKeyValue<Tkey,Tvalue>(this Dictionary<Tkey,Tvalue> dict,Tkey key,Tvalue value){
+		if (dict != null) {
+			if (dict.ContainsKey (key)) {
+				dict [key] = value;
+				return;
+			}
+			dict.Add (key, value);
+		}
+	}
+
     /// <summary>
     /// 取值。存在返回对应值，不存在或字典未定义时返回默认值。
     /// </summary>

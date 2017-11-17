@@ -32,7 +32,7 @@ namespace XUIF
         public static void BindButton(string eventName, GameObject go)
         {
             ButtonTriggerListener listener = ButtonTriggerListener.GetListener(go);
-            _eventListenerDic.Add(eventName, listener);
+			_eventListenerDic.AddKeyValue(eventName, listener);
         }
 
         /// <summary>
@@ -51,9 +51,6 @@ namespace XUIF
             }
             return false;
         }
-
-
-        
 
         //根据实际需要添加绑定事件
     }

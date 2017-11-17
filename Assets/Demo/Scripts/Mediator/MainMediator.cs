@@ -31,6 +31,10 @@ public class MainMediator : Mediator {
             OpenPanel(ViewDefine.EMAILBOX);
         });
 
+		BindClickEvent ("Setting", go => {
+			OpenPanel(ViewDefine.SETTING);
+		});
+
         MessageDispatcher.SendMsg("player_id", "Heads");
 
         MessageDispatcher.SendMsg("head", LoadImg("head"));

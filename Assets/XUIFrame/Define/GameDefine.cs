@@ -16,8 +16,18 @@
 using UnityEngine;
 using System.Collections;
 
-public class GameDefine {
+public class GameDefine
+{
 
-    public static int emailId = 0;
-	
+	public static int emailId = 0;
+
+}
+
+public static class PathDefine
+{
+	public const string PANEL = "UIPanel/";
+
+	public const string SETTINGCONFIG = "Config/SettingConfig";
+
+	public const string LANGCONFIG = "Config/Localization/";
 }

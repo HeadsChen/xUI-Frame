@@ -1,4 +1,4 @@
-﻿{
+{
     "ConfigInfoList": 
 	[
         {
@@ -72,6 +72,12 @@
         {
             "Key": "Email_AddEmail",
             "Value": "添加邮件"
-        }
+        },{
+			"Key":"ENGLISH",
+			"Value":"英文"
+		},{
+			"Key":"CHINESE",
+			"Value":"中文"
+		}
     ]
 }

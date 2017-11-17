@@ -23,24 +23,4 @@ public class RootMediator : Mediator {
         MessageDispatcher.SendMsg("Mask", new Color(0, 0, 0, 0));
         gameObject.SetActive(false);
     }
-
-    public override void Display()
-    {
-        gameObject.SetActive(true);
-    }
-
-    public override void Hide()
-    {
-        gameObject.SetActive(false);
-    }
-
-    public override void Freeze()
-    {
-        gameObject.SetActive(false);
-    }
-
-    public override void Reactivate()
-    {
-        gameObject.SetActive(true);
-    }
 }

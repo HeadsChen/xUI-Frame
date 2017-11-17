@@ -25,7 +25,7 @@ namespace XUIF
     /// <typeparam name="T"></typeparam>
 	public class TreeStack<T>
     {
-        #region 根末节点
+        #region 节点
         //根引用
         private Node<T> root;
 
@@ -150,6 +150,11 @@ namespace XUIF
         {
             return end.RemoveChild(id).Data;
         }
+
+
+		public void Clear(){
+			root = null;
+		}
 
         #endregion
 

@@ -42,7 +42,7 @@ namespace XUIF
             }
             ContextModel model = new ContextModel();
             model.Value = o;
-            _modelDic.Add(msgType, model);
+			_modelDic.AddKeyValue(msgType, model);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace XUIF
             }
             ContextModel model = new ContextModel();
             model.AddListner(delHandle);
-            _modelDic.Add(msgType, model);
+			_modelDic.AddKeyValue(msgType, model);
         }
 
         /// <summary>
@@ -84,6 +84,9 @@ namespace XUIF
             }
         }
 
+		public static void ClearModel(){
+			_modelDic.Clear ();
+		}
 
         public static void AddReceiver(string msgType,IReceive rec)
         {
@@ -102,6 +105,15 @@ namespace XUIF
                 _receiveDic[msgType].OnReceive();
             }
         }
+
+		public static void ClearReceiver(){
+			_receiveDic.Clear ();
+		}
+
+		public static void ClearMsg(){
+			ClearModel ();
+			ClearReceiver ();
+		}
     }
 
 

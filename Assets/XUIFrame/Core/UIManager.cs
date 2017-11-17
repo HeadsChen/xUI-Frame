@@ -104,6 +104,11 @@ namespace XUIF
             m.Hide();
         }
 
+		public void ClearTreeStack(){
+			MediatorMgr.Instance.ClearMediator();
+			_UITreeStack.Clear ();
+		}
+
         #endregion
 
         #region UI树行为逻辑
@@ -119,7 +124,7 @@ namespace XUIF
                 _UITreeStack = new TreeStack<Mediator>("Root", m);
                 return;
             }
-            Debug.LogErrorFormat("UI TreeStack failed to create.Cause:could not find the mediator {0}", "Root");
+			Debug.LogErrorFormat("UI TreeStack failed to create.Cause:could not find the {0} mediator.", "Root");
         }
                 
         #endregion
@@ -134,13 +139,15 @@ namespace XUIF
             return Singleton<MediatorMgr>.Instance.GetMediator(name);
 		}
 
+		#if UNITY_EDITOR
 		#region 测试用
 		public string Log(){
-
-			return string.Format ("Current UI Tree contains:\n{0}\nCurrent panel is {1} ", _UITreeStack.Traverse (_UITreeStack.End), _UITreeStack.End.Id);
+			if(_UITreeStack!=null)
+				return string.Format ("Current UI Tree contains:\n{0}\nCurrent panel is {1} ", _UITreeStack.Traverse (_UITreeStack.End), _UITreeStack.End.Id);
+			return null;
 		}
 		#endregion
-
+		#endif
 
 		
 	}

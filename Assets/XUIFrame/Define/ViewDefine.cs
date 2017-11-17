@@ -18,13 +18,16 @@ using System.Collections;
 
 namespace XUIF
 {
-    public class ViewDefine
-    {
-        public static string ROOT = "Root";
-        public static string LOGIN = "Login";
-        public static string MAIN = "Main";
-        public static string EMAILBOX = "EmailBox";
-        public static string HEROINFO = "HeroInfo";
-    }
+	public class ViewDefine
+	{
+		public static string ROOT = "Root";
+		public static string LOGIN = "Login";
+		public static string MAIN = "Main";
+		public static string EMAILBOX = "EmailBox";
+		public static string HEROINFO = "HeroInfo";
+		public static string SETTING = "Setting";
+	}
+
+
 }
 
