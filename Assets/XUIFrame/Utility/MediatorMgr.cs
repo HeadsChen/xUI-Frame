@@ -107,7 +107,7 @@ namespace XUIF
 						_mDic.AddKeyValue (name, m);
 					}
 				} catch (System.Exception e) {
-//					GameObject.Destroy (panelGo);
+					GameObject.Destroy (panelGo);
 					Debug.LogErrorFormat ("{0} Mediator can not set to {0} Panel.Cause:{1}", name, e.Message);
 				}
 				return;

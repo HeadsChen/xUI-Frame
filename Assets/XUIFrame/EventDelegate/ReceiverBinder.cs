@@ -32,7 +32,7 @@ namespace XUIF
         public static void BindReceiver(string eventName, Transform tran)
         {
             Receiver listener = Receiver.GetListener(tran);
-            _receiverDic.Add(eventName, listener);
+			_receiverDic.AddKeyValue(eventName, listener);
         }
 
         /// <summary>
@@ -52,5 +52,7 @@ namespace XUIF
             }
             return null;
         }
+
+
     }
 }

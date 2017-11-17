@@ -72,12 +72,20 @@
         {
             "Key": "Email_AddEmail",
             "Value": "AddEmail"
-        },{
+        },
+		{
+			"Key":"Setting_Title",
+			"Value":"SETTING"
+		},
+		{
 			"Key":"ENGLISH",
 			"Value":"English"
 		},{
 			"Key":"CHINESE",
 			"Value":"Chinese"
+		},{
+			"Key":"Email_Get",
+			"Value":"Get It"
 		}
     ]
 }
